@@ -2,7 +2,7 @@ import React from "react";
 
 function Main() {
   return (
-    <div>
+    <div className="bg-secondary text-light rounded p-3">
       <h1>Main Page</h1>
       <h5>Sunt mollit nisi voluptate amet pariatur veniam consequat dolor deserunt laborum ipsum do non fugiat. Aute consectetur ex aliqua ipsum cupidatat reprehenderit. Fugiat eu ullamco consequat aliqua. Id occaecat nisi fugiat reprehenderit excepteur exercitation esse aliqua culpa. Enim culpa elit anim nisi anim aliqua irure non excepteur incididunt culpa enim. Ea eu exercitation consequat sunt mollit officia do aliquip. Ut proident laboris adipisicing et consequat occaecat commodo fugiat sint esse pariatur aute ex velit.
 
