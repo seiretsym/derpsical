@@ -5,6 +5,7 @@ import Header from "./components/Header"
 import Nav from "./components/Nav";
 // Pages
 import Main from "./pages/Main"
+import Profile from "./pages/Profile"
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
           <Nav />
         <Switch>
           <Route exact path="/" component={Main} />
+          <Route exact path="/profile" component={Profile} />
         </Switch>
         </div>
     </Router>
