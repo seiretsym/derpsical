@@ -12,8 +12,12 @@ import LoginModal from "./components/LoginModal"
 class App extends Component {
   state = {
     modalShow: false,
+    user: "",
   }
 
+  handleUser = user => {
+    this.setState({ user: user })
+  }
   setModalShow = bool => {
     this.setState({ modalShow: bool })
   }
@@ -33,6 +37,7 @@ class App extends Component {
               <LoginModal
                 show={this.state.modalShow}
                 onHide={() => this.setModalShow(false)}
+                user={() => this.handleUser}
               />
             </div>
           </Router>

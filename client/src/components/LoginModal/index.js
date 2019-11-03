@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import Modal from "react-bootstrap/Modal";
-import Button from "react-bootstrap/Button"
+import Button from "react-bootstrap/Button";
+import API from "../../utils";
 
 class LoginModal extends Component {
   state = {
@@ -29,13 +30,13 @@ class LoginModal extends Component {
       case "Sign In":
         return (
           <form>
-            <div class="form-group">
+            <div className="form-group">
               <label>Username</label>
-              <input name="username" value={this.state.username} id="username" type="text" class="form-control" placeholder={this.state.usernameph} onChange={this.handleInputChange} />
+              <input name="username" value={this.state.username} id="username" type="text" className="form-control" placeholder={this.state.usernameph} onChange={this.handleInputChange} />
             </div>
-            <div class="form-group">
+            <div className="form-group">
               <label>Password</label>
-              <input name="password" value={this.state.password} id="password" type="password" class="form-control" placeholder={this.state.passwordph} onChange={this.handleInputChange} />
+              <input name="password" value={this.state.password} id="password" type="password" className="form-control" placeholder={this.state.passwordph} onChange={this.handleInputChange} />
             </div>
             <strong>Click Sign In Button to Sign In</strong>
           </form>
@@ -44,17 +45,17 @@ class LoginModal extends Component {
       case "Register":
         return (
           <form>
-            <div class="form-group">
+            <div className="form-group">
               <label>Username</label>
-              <input name="username" value={this.state.username} id="username" type="text" class="form-control" placeholder={this.state.usernameph} onChange={this.handleInputChange} />
+              <input name="username" value={this.state.username} id="username" type="text" className="form-control" placeholder={this.state.usernameph} onChange={this.handleInputChange} />
             </div>
-            <div class="form-group">
+            <div className="form-group">
               <label>Password</label>
-              <input name="password" value={this.state.password} id="password" type="password" class="form-control" placeholder={this.state.passwordph} onChange={this.handleInputChange} />
+              <input name="password" value={this.state.password} id="password" type="password" className="form-control" placeholder={this.state.passwordph} onChange={this.handleInputChange} />
             </div>
-            <div class="form-group">
+            <div className="form-group">
               <label>Confirm</label>
-              <input name="confirm" value={this.state.confirm} id="confirm" type="password" class="form-control" placeholder={this.state.confirmph} onChange={this.handleInputChange} />
+              <input name="confirm" value={this.state.confirm} id="confirm" type="password" className="form-control" placeholder={this.state.confirmph} onChange={this.handleInputChange} />
             </div>
             <strong>Click Register Button to Register</strong>
           </form>
@@ -110,7 +111,19 @@ class LoginModal extends Component {
         this.setState({ confirm: "", confirmph: "doesn't match password" })
       } else {
         // process registration
-        console.log("register")
+        let user = {
+          username: this.state.username,
+          password: this.state.password
+        }
+        API.createUser(user).then(data => {
+          // do something after user registers
+          this.props.handleUser(this.state.username)
+        }).catch(err => {
+          if (err) {
+            document.getElementById("username").focus();
+            this.setState({ username: "", usernameph: "username already taken" })
+          }
+        });
       }
     }
   }
