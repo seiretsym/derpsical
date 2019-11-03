@@ -12,8 +12,9 @@ class Nav extends Component {
           </button>
           <div className="dropdown-menu">
             <a className="dropdown-item" href="/profile">Profile</a>
+            <div className="dropdown-divider"></div>
             <a className="dropdown-item" href="/songs">Songs</a>
-            <a className="dropdown-item" href="/piano">Piano</a>
+            <a className="dropdown-item" href="/compose">Compose</a>
             <div className="dropdown-divider"></div>
             <button className="btn btn-clear dropdown-item" onClick={() => this.props.handleLogout()}>Sign Out</button>
           </div>
@@ -30,6 +31,9 @@ class Nav extends Component {
       <ul className="nav bg-secondary text-light rounded mb-3">
         <li className="nav-item">
           <a className="nav-link text-light" href="./">Home</a>
+        </li>
+        <li className="nav-item">
+          <a className="nav-link text-light" href="/demo">Piano</a>
         </li>
         <li className="nav-item ml-auto">
           {this.button()}

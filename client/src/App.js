@@ -3,11 +3,14 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 // Components
 import Header from "./components/Header"
 import Nav from "./components/Nav";
+import LoginModal from "./components/LoginModal"
 import DimensionsProvider from "./components/DimensionsProvider";
 // Pages
 import Main from "./pages/Main"
 import Profile from "./pages/Profile"
-import LoginModal from "./components/LoginModal"
+import Demo from "./pages/Demo"
+// Css
+import './App.css';
 
 class App extends Component {
   state = {
@@ -55,7 +58,9 @@ class App extends Component {
               <Nav login={this.state.login} user={this.state.user} handleLogin={() => this.setModalShow(true)} handleLogout={this.handleLogout} />
               <Switch>
                 <Route exact path="/" component={Main} />
-                <Route exact path="/profile" component={Profile} />
+                <Route path="/profile" component={Profile} />
+                <Route path="/demo" component={Demo} />
+                <Route component={Main} />
               </Switch>
               <LoginModal
                 show={this.state.modalShow}
