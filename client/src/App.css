@@ -45,6 +45,11 @@ textarea {
   border: none;
 }
 
+textarea, button, input {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
 /* Piano Stuff */
 
 /* react piano css */

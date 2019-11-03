@@ -52,8 +52,9 @@ const keyboardShortcuts = KeyboardShortcuts.create({
 class Demo extends Component {
   state = {
     notes: [],
-    text: "",
+    text: "[d6], [e6], [d6], [c6], [a4c5e5a5], [], [], [], [a4c5e5], [], [], [], [a4c5e5], [], [], [], [a4c5e5d6], [e6], [d6], [c6], [f4a4c5a5], [g5], [], [], [f4a4c5], [], [], [], [f4a4c5], [], [], [], [f4a4c5], [], [g5], [], [g4c5e5c6], [], [g5], [c6], [g4c5e5], [], [g5], [c6], [g4c5e5], [], [c6], [c6], [g4c5e5c6], [], [d6], [b5], [g4b4d5], [], [], [], [g4b4d5], [], [], [], [g4b4d5], [], [], [], [g4b4d5d6], [e6], [d6], [c6], [a4c5e5a5], [], [], [], [a4c5e5], [], [], [], [a4c5e5], [], [], [], [a4c5e5d6], [e6], [d6], [c6], [f4a4c5a5], [g5], [], [], [f4a4c5], [], [], [], [f4a4c5], [], [], [], [f4a4c5], [], [g5], [], [g4c5e5c6], [], [g5], [c6], [g4c5e5], [], [g5], [c6], [g4c5e5], [], [c6], [c6], [g4c5e5c6], [], [d6], [b5], [g4b4d5], [], [], [], [g4b4d5], [], [], [], [g4b4d5], [], [], [], [g4b4d5], [], [], [],",
     prevNotes: [],
+    tempo: "120",
   }
 
   constructor(props) {
@@ -136,7 +137,7 @@ class Demo extends Component {
             }
           }
           resolve(newChord)
-        }, 250 * timer))
+        }, (60000 / parseInt(this.state.tempo) / 2) * timer))
       })
       return promise.then(chord => {
         // create a copy of this.state.prevNotes
@@ -197,16 +198,22 @@ class Demo extends Component {
   }
 
   handleChange = event => {
-    const { value } = event.target
-    this.setState({ text: value })
+    const { name, value } = event.target
+    this.setState({ [name]: value })
   }
 
   render() {
     return (
-      <div>
-        <button className="btn btn-secondary text-light mb-3" onClick={this.playNotes}>play</button>
-        <button className="btn btn-secondary text-light ml-3 mb-3" onClick={this.stopNotes}>stop</button>
-        <textarea id="notes" rows="10" className="bg-secondary text-light rounded" onChange={this.handleChange} value={this.state.text} spellcheck="false"></textarea><br />
+      <div className="bg-secondary p-3 rounded">
+        <div className="d-flex">
+          <button className="btn btn-dark text-light mb-3" onClick={this.playNotes}>play</button>
+          <button className="btn btn-dark text-light ml-3 mb-3" onClick={this.stopNotes}>stop</button>
+          <button className="btn btn-dark text-light ml-3 mb-3 disabled">Tempo</button>
+          <input name="tempo" type="text" className="btn btn-dark mb-3 text-left" placeholder="tempo" value={this.state.tempo} onChange={this.handleChange} />
+          <span className="btn ml-auto text-light">Please register for full access</span>
+        </div>
+        <textarea name="text" id="notes" rows="10" className="bg-dark text-light rounded" onChange={this.handleChange} value={this.state.text} spellcheck="false" disabled>
+        </textarea><br />
 
         <DimensionsProvider>
           {({ containerWidth, containerHeight }) => (
