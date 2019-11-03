@@ -27,5 +27,17 @@ module.exports = {
           })
       }
     })
+  },
+  findAll: function (req, res) {
+    db.User.find({ username: req.query.username })
+      .then(user => {
+        bcrypt.compare(req.query.password, user[0].password, function (err, conf) {
+          if (conf) {
+            res.json(user[0])
+          } else {
+            res.send(conf)
+          }
+        })
+      })
   }
 };

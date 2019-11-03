@@ -82,10 +82,25 @@ class LoginModal extends Component {
       } else if (this.state.password === "") {
         console.log("blank password")
         document.getElementById("password").focus();
-        this.setState({ usernameph: "invalid password" })
+        this.setState({ passwordph: "invalid password" })
       } else {
         // process sign in
         console.log("sign in")
+        let user = {
+          username: this.state.username,
+          password: this.state.password
+        }
+        API.getUser(user).then(data => {
+          if (data.data) {
+            // user signed in, do something...
+            sessionStorage.setItem("user", this.state.username)
+            this.props.user(data.data.username)
+          } else {
+            // wrong password
+            document.getElementById("password").focus();
+            this.setState({ password: "", passwordph: "invalid password" })
+          }
+        })
       }
     }
   }
@@ -104,7 +119,7 @@ class LoginModal extends Component {
       } else if (this.state.password === "") {
         console.log("blank password")
         document.getElementById("password").focus();
-        this.setState({ usernameph: "invalid password" })
+        this.setState({ passwordph: "invalid password" })
       } else if (this.state.confirm !== this.state.password) {
         console.log("passwords don't match")
         document.getElementById("confirm").focus();
@@ -117,9 +132,11 @@ class LoginModal extends Component {
         }
         API.createUser(user).then(data => {
           // do something after user registers
-          this.props.handleUser(this.state.username)
+          sessionStorage.setItem("user", this.state.username)
+          this.props.user(this.state.username)
         }).catch(err => {
           if (err) {
+            // username taken!
             document.getElementById("username").focus();
             this.setState({ username: "", usernameph: "username already taken" })
           }

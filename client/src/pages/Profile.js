@@ -13,7 +13,6 @@ class Profile extends Component {
     ]
   }
 
-
   handleProfileLinkOnClick = link => {
     this.setState({
       view: link

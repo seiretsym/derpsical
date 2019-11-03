@@ -11,25 +11,48 @@ import LoginModal from "./components/LoginModal"
 
 class App extends Component {
   state = {
+    login: false,
     modalShow: false,
-    user: "",
+    user: "No User",
   }
 
   handleUser = user => {
-    this.setState({ user: user })
+    if (!this.state.login) {
+      this.setState({
+        user: user,
+        login: true,
+        modalShow: false
+      })
+    }
   }
+
   setModalShow = bool => {
     this.setState({ modalShow: bool })
   }
 
+  handleLogout = () => {
+    sessionStorage.removeItem("user");
+    this.setState({
+      login: false,
+      user: "No User",
+    })
+  }
   render() {
+    let user = sessionStorage.getItem("user");
+    if (user && !this.state.login) {
+      this.setState({
+        login: true,
+        user: user
+      })
+    }
+
     return (
       <DimensionsProvider>
         {({ containerWidth, containerHeight }) => (
           <Router>
             <div className="container">
               <Header />
-              <Nav handleLogin={() => this.setModalShow(true)} />
+              <Nav login={this.state.login} user={this.state.user} handleLogin={() => this.setModalShow(true)} handleLogout={this.handleLogout} />
               <Switch>
                 <Route exact path="/" component={Main} />
                 <Route exact path="/profile" component={Profile} />
@@ -37,7 +60,7 @@ class App extends Component {
               <LoginModal
                 show={this.state.modalShow}
                 onHide={() => this.setModalShow(false)}
-                user={() => this.handleUser}
+                user={this.handleUser}
               />
             </div>
           </Router>
