@@ -107,14 +107,14 @@ class ProfileBody extends Component {
             <form>
               <div className="form-group row">
                 <label className="col-sm-2 col-form-label">Name</label>
-                <div class="col-sm-10">
-                  <input name="fullname" type="text" className="form-control" value={this.state.fullname} onChange={this.handleInputChange} />
+                <div className="col-sm-10">
+                  <input name="fullname" type="text" className="form-control" value={this.state.fullname} autoComplete="name" onChange={this.handleInputChange} />
                 </div>
               </div>
-              <div class="form-group row">
-                <label class="col-sm-2 col-form-label">Display Name</label>
-                <div class="col-sm-10">
-                  <input name="displayname" type="text" className="form-control" value={this.state.displayname} onChange={this.handleInputChange} />
+              <div className="form-group row">
+                <label className="col-sm-2 col-form-label">Display Name</label>
+                <div className="col-sm-10">
+                  <input name="displayname" type="text" className="form-control" value={this.state.displayname} autoComplete="username" onChange={this.handleInputChange} />
                 </div>
               </div>
               <hr />
@@ -122,13 +122,13 @@ class ProfileBody extends Component {
               <div className="form-group row">
                 <label className="col-sm-2 col-form-label">Password</label>
                 <div className="col-sm-10">
-                  <input name="password" type="password" className="form-control" value={this.state.password} placeholder="new password" onChange={this.handleInputChange} />
+                  <input name="password" type="password" className="form-control" value={this.state.password} placeholder="new password" autoComplete="new-password" onChange={this.handleInputChange} />
                 </div>
               </div>
               <div className="form-group row">
                 <label className="col-sm-2 col-form-label">Confirm</label>
                 <div className="col-sm-10">
-                  <input name="confirm" id="confirm" type="password" className="form-control" value={this.state.confirm} placeholder="confirm password" onChange={this.handleInputChange} />
+                  <input name="confirm" id="confirm" type="password" className="form-control" value={this.state.confirm} placeholder="confirm password" autoComplete="password-confirm" onChange={this.handleInputChange} />
                 </div>
               </div>
               <hr />

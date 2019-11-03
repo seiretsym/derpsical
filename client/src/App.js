@@ -18,7 +18,7 @@ class App extends Component {
     login: false,
     modalShow: false,
     profile: {
-      displayname: ""
+      displayname: "No User"
     }
   }
 
@@ -44,7 +44,7 @@ class App extends Component {
     this.setState({
       login: false,
       profile: {
-        displayname: ""
+        displayname: "No User"
       }
     })
   }
@@ -93,7 +93,7 @@ class App extends Component {
           <LoginModal
             show={this.state.modalShow}
             onHide={() => this.setModalShow(false)}
-            user={this.handleUser}
+            onUser={this.handleUser}
           />
         </div>
       </Router>

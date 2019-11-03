@@ -134,6 +134,7 @@ class Demo extends Component {
                 midiNumber = 11 + (12 * parseInt(notes[i + 1]))
                 newChord.push(midiNumber)
                 break;
+              default:
             }
           }
           resolve(newChord)
@@ -185,9 +186,6 @@ class Demo extends Component {
         }
       })
     }))
-    // this.setState({
-    //   notes: notes.map(note => { return parseInt(note)})
-    // })
   }
 
   stopNotes = () => {

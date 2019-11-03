@@ -32,11 +32,11 @@ class LoginModal extends Component {
           <form>
             <div className="form-group">
               <label>Username</label>
-              <input name="username" value={this.state.username} id="username" type="text" className="form-control" placeholder={this.state.usernameph} onChange={this.handleInputChange} />
+              <input name="username" value={this.state.username} id="username" type="text" className="form-control" placeholder={this.state.usernameph} autoComplete="username" onChange={this.handleInputChange} />
             </div>
             <div className="form-group">
               <label>Password</label>
-              <input name="password" value={this.state.password} id="password" type="password" className="form-control" placeholder={this.state.passwordph} onChange={this.handleInputChange} />
+              <input name="password" value={this.state.password} id="password" type="password" className="form-control" placeholder={this.state.passwordph} autoComplete="password" onChange={this.handleInputChange} />
             </div>
             <strong>Click Sign In Button to Sign In</strong>
           </form>
@@ -47,15 +47,15 @@ class LoginModal extends Component {
           <form>
             <div className="form-group">
               <label>Username</label>
-              <input name="username" value={this.state.username} id="username" type="text" className="form-control" placeholder={this.state.usernameph} onChange={this.handleInputChange} />
+              <input name="username" value={this.state.username} id="username" type="text" className="form-control" placeholder={this.state.usernameph} autoComplete="username" onChange={this.handleInputChange} />
             </div>
             <div className="form-group">
               <label>Password</label>
-              <input name="password" value={this.state.password} id="password" type="password" className="form-control" placeholder={this.state.passwordph} onChange={this.handleInputChange} />
+              <input name="password" value={this.state.password} id="password" type="password" className="form-control" placeholder={this.state.passwordph} autoComplete="password" onChange={this.handleInputChange} />
             </div>
             <div className="form-group">
               <label>Confirm</label>
-              <input name="confirm" value={this.state.confirm} id="confirm" type="password" className="form-control" placeholder={this.state.confirmph} onChange={this.handleInputChange} />
+              <input name="confirm" value={this.state.confirm} id="confirm" type="password" className="form-control" placeholder={this.state.confirmph} autoComplete="password-confirm" onChange={this.handleInputChange} />
             </div>
             <strong>Click Register Button to Register</strong>
           </form>
@@ -96,7 +96,7 @@ class LoginModal extends Component {
             sessionStorage.setItem("user", profile.data.username)
             sessionStorage.setItem("hash", profile.data.password)
             sessionStorage.setItem("auto", true)
-            this.props.user(profile.data.profile)
+            this.props.onUser(profile.data.profile)
           } else {
             // wrong password
             document.getElementById("password").focus();
@@ -137,7 +137,7 @@ class LoginModal extends Component {
           sessionStorage.setItem("user", profile.data.username)
           sessionStorage.setItem("hash", profile.data.password)
           sessionStorage.setItem("auto", true)
-          this.props.user(profile.data.profile)
+          this.props.onUser(profile.data.profile)
         }).catch(err => {
           if (err) {
             // username taken!
