@@ -2,7 +2,9 @@ import React from "react";
 
 function ProfileBody(props) {
 
+  // function that decides which view to show
   const showPage = () => {
+    // get view from props
     switch (props.view) {
       case "Profile":
         return (

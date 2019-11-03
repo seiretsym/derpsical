@@ -20,3 +20,19 @@
 .App-link {
   color: #09d3ac;
 }
+
+.md {
+  position: absolute;
+  width: 500px;
+  height: 500px;
+  background: rgba(0, 0, 0, 0.6);
+}
+.md-main {
+  position: relative;
+  background: white;
+  width: 500px;
+  height: auto;
+  top:50%;
+  left:50%;
+  transform: translate(-50%,-50%);
+}

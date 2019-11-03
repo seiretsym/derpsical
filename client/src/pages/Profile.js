@@ -2,14 +2,14 @@ import React, { Component } from "react";
 import ProfileNav from "../components/ProfileNav"
 import ProfileBody from "../components/ProfileBody"
 
-class Main extends Component {
+class Profile extends Component {
   state = {
     view: "Profile",
     links: [
-      {name: "Profile"},
-      {name: "Messages"},
-      {name: "Songs"},
-      {name: "Config"},
+      { name: "Profile" },
+      { name: "Messages" },
+      { name: "Songs" },
+      { name: "Config" },
     ]
   }
 
@@ -24,10 +24,10 @@ class Main extends Component {
     return (
       <div className="row">
         <div className="col-md-3 m-0">
-          <ProfileNav links={this.state.links} handleClick={this.handleProfileLinkOnClick} active={this.state.view}/>
+          <ProfileNav links={this.state.links} handleClick={this.handleProfileLinkOnClick} active={this.state.view} />
         </div>
         <div className="col-md m-0 pl-0">
-          <ProfileBody view={this.state.view}/>
+          <ProfileBody view={this.state.view} />
         </div>
       </div>
     )
@@ -35,4 +35,4 @@ class Main extends Component {
 }
 
 
-export default Main;
+export default Profile;
