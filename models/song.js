@@ -11,6 +11,9 @@ var SongSchema = new Schema({
   notes: {
     type: String
   },
+  composer: {
+    type: String
+  },
   share: {
     type: Boolean,
     default: true,

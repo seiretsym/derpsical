@@ -5,7 +5,6 @@ const bcrypt = require("bcrypt");
 module.exports = {
   // create
   create: function (req, res) {
-    console.log("db.User.create ran")
     bcrypt.hash(req.body.password, 10, function (err, hash) {
       if (err) {
         // send back 422 and error message if error
@@ -19,9 +18,13 @@ module.exports = {
         db.User
           .create(user)
           .then(userModel => {
+            console.log(userModel);
             // create a profile for user
+            // append part of the UID to displayname
+            let id = String(userModel._id);
+            let suffix = id.slice(5, 10);
             db.Profile
-              .create({ fullname: userModel.username, displayname: userModel.username })
+              .create({ fullname: userModel.username, displayname: userModel.username + "_derp_" + suffix })
               // then attach profile to user
               .then(profile => {
                 db.User.update(userModel, { $set: { profile: profile._id } })
@@ -30,19 +33,22 @@ module.exports = {
                   })
                   // error handling
                   .catch(err => {
-                    console.log(err)
-                    res.status(422).json(err)
+                    console.log("user update error");
+                    console.log(err);
+                    res.status(422).json(err);
                   })
               })
               // error handling
               .catch(err => {
-                console.log(err)
-                res.status(422).json(err)
+                console.log("profile create error");
+                console.log(err);
+                res.status(422).json(err);
               })
           })
           // more error handling
           .catch(err => {
-            res.status(422).json(err)
+            console.log("create user error");
+            res.status(422).json(err);
           })
       }
     })

@@ -96,7 +96,7 @@ class LoginModal extends Component {
             sessionStorage.setItem("user", profile.data.username)
             sessionStorage.setItem("hash", profile.data.password)
             sessionStorage.setItem("auto", true)
-            this.props.onUser(profile.data.profile)
+            document.location.replace("./")
           } else {
             // wrong password
             document.getElementById("password").focus();
@@ -137,7 +137,7 @@ class LoginModal extends Component {
           sessionStorage.setItem("user", profile.data.username)
           sessionStorage.setItem("hash", profile.data.password)
           sessionStorage.setItem("auto", true)
-          this.props.onUser(profile.data.profile)
+          document.location.replace("./")
         }).catch(err => {
           if (err) {
             // username taken!

@@ -42,6 +42,14 @@ class ProfileBody extends Component {
             profileModalShow: true
           })
         })
+        // error handling for display name already in use
+        .catch(err => {
+          document.getElementById("dname").focus();
+          document.getElementById("dname").setAttribute("placeholder", "that display name is already taken");
+          this.setState({
+            displayname: ""
+          })
+        })
     } else {
       // if password was updated, check if it matches confirm
       if (this.state.password === this.state.confirm) {
@@ -69,12 +77,22 @@ class ProfileBody extends Component {
                   profileModalShow: true
                 })
               })
+              // error handling for display name already in use
+              .catch(err => {
+                document.getElementById("dname").focus();
+                document.getElementById("dname").setAttribute("placeholder", "that display name is already taken");
+                this.setState({
+                  displayname: ""
+                })
+              })
           })
       } else {
         // confirmation fail
-        document.getElementById("confirm").focus()
-        document.getElementById("confirm").setAttribute("value", "")
-        document.getElementById("confirm").setAttribute("placeholder", "password doesn't match")
+        document.getElementById("confirm").focus();
+        document.getElementById("confirm").setAttribute("placeholder", "password doesn't match");
+        this.setState({
+          confirm: ""
+        })
       }
     }
   }
@@ -113,7 +131,7 @@ class ProfileBody extends Component {
               <div className="form-group row">
                 <label className="col-sm-2 col-form-label">Display Name</label>
                 <div className="col-sm-10">
-                  <input name="displayname" type="text" className="form-control" value={this.state.displayname} autoComplete="username" onChange={this.handleInputChange} />
+                  <input id="dname" name="displayname" type="text" className="form-control" value={this.state.displayname} autoComplete="username" onChange={this.handleInputChange} />
                 </div>
               </div>
               <hr />
