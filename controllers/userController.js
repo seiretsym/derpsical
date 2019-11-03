@@ -24,10 +24,10 @@ module.exports = {
             let id = String(userModel._id);
             let suffix = id.slice(5, 10);
             db.Profile
-              .create({ fullname: userModel.username, displayname: userModel.username + "_derp_" + suffix })
+              .create({ fullname: userModel.username, displayname: userModel.username + "_derp_" + suffix, uid: userModel._id })
               // then attach profile to user
               .then(profile => {
-                db.User.update(userModel, { $set: { profile: profile._id } })
+                db.User.updateOne(userModel, { $set: { profile: profile._id } })
                   .then(() => {
                     res.json(userModel)
                   })

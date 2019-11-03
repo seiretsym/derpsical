@@ -103,7 +103,7 @@ class ProfileBody extends Component {
     })
   }
 
-  render() {
+  componentDidUpdate() {
     if (this.props.loggedin && !this.state.loggedin) {
       this.setState({
         _id: this.props.profile._id,
@@ -115,7 +115,9 @@ class ProfileBody extends Component {
         loggedin: true
       })
     }
+  }
 
+  render() {
     switch (this.props.view) {
       case "Profile":
         return (

@@ -5,14 +5,15 @@ var Schema = mongoose.Schema
 
 // create schema
 var SongSchema = new Schema({
-  name: {
+  title: {
     type: String
   },
   notes: {
     type: String
   },
   composer: {
-    type: String
+    type: Schema.Types.ObjectId,
+    ref: "User"
   },
   share: {
     type: Boolean,

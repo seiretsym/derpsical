@@ -4,6 +4,7 @@ import { KeyboardShortcuts, MidiNumbers } from 'react-piano';
 import CustomPiano from '../components/CustomPiano';
 import SoundfontProvider from '../components/SoundfontProvider';
 import DimensionsProvider from '../components/DimensionsProvider';
+import API from "../utils";
 
 const audioContext = new (window.AudioContext || window.webkitAudioContext)();
 const soundfontHostname = 'https://d1pzp51pvbm36p.cloudfront.net';
@@ -53,11 +54,13 @@ const keyboardShortcuts = KeyboardShortcuts.create({
 class Composer extends Component {
   state = {
     notes: [],
-    text: "",
+    noteScript: "",
     prevNotes: [],
     tempo: "120",
     songTitle: "",
-    infoModalShow: false
+    infoModalShow: false,
+    profile: null,
+    savedModalShow: false,
   }
 
   constructor(props) {
@@ -66,7 +69,7 @@ class Composer extends Component {
   }
 
   playNotes = () => {
-    let string = this.state.text.toLowerCase().replace(/\s/g, "");
+    let string = this.state.noteScript.toLowerCase().replace(/\s/g, "");
     console.log(string)
     let chords = string.split(",")
     let timer = 0;
@@ -168,11 +171,7 @@ class Composer extends Component {
             // after all promises have been resolved...
             .then(chordFilter => {
               // filter the new chord stored in chordFilters to remove blanks
-              let filter = chordFilter.filter(note => {
-                if (note !== "") {
-                  return note
-                }
-              })
+              let filter = chordFilter.filter(note => note !== "");
               // update state to remove the notes that will be played next
               this.setState({
                 notes: filter
@@ -215,8 +214,43 @@ class Composer extends Component {
     })
   }
 
+  // save song
   saveSong = () => {
-    console.log("save song. work on me")
+    console.log(this.state.profile)
+    let newSong = {
+      title: this.state.songTitle,
+      notes: this.state.noteScript,
+      composer: this.state.profile._id,
+    }
+    API.createSong(newSong)
+      .then(song => {
+        // showModal
+        this.setState({
+          savedModalShow: true,
+          songId: song.data._id,
+        })
+      })
+      .catch(err => {
+        // this should never happen unless connection sucks
+        console.log(err)
+      })
+  }
+
+  // hide save modal
+  hideSaveModal = () => {
+    this.setState({
+      savedModalShow: false,
+    })
+  }
+
+  // make sure we get all the data we need from props
+  componentDidUpdate() {
+    if (this.props.loggedin && !this.state.loggedin) {
+      this.setState({
+        profile: this.props.profile,
+        loggedin: true,
+      })
+    }
   }
 
   render() {
@@ -230,8 +264,8 @@ class Composer extends Component {
             <input name="tempo" type="text" className="btn btn-dark mb-1 text-left tempoInput" placeholder="tempo" value={this.state.tempo} onChange={this.handleChange} />
             <button className="btn btn-dark text-light ml-3 mb-1" onClick={this.saveSong}>Save Song</button>
           </div>
-          <textarea name="songTitle" value={this.state.songTitle} onChange={this.handleChange} placeholder="Title" className="text-light bg-dark m-0 rounded" rows="1" spellcheck="false" />
-          <textarea name="text" id="notes" rows="10" className="bg-dark text-light rounded" onChange={this.handleChange} value={this.state.text} spellcheck="false" />
+          <textarea name="songTitle" value={this.state.songTitle} onChange={this.handleChange} placeholder="Title" className="text-light bg-dark m-0 rounded" rows="1" spellCheck="false" />
+          <textarea name="noteScript" id="notes" rows="10" className="bg-dark text-light rounded" onChange={this.handleChange} value={this.state.noteScript} spellCheck="false" />
           <DimensionsProvider>
             {({ containerWidth, containerHeight }) => (
               <SoundfontProvider
@@ -292,6 +326,22 @@ class Composer extends Component {
               <h5>Keymapping:</h5>
               <p>This can be configured in your Profile Settings.</p>
             </div>
+          </Modal.Body>
+        </Modal>
+        <Modal
+          show={this.state.SaveModalShow}
+          onHide={this.hideSaveModal}
+          size="md"
+          aria-labelledby="contained-modal-title-vcenter"
+          centered
+        >
+          <Modal.Header className="text-dark" closeButton>
+            <Modal.Title id="contained-modal-title-vcenter">
+              New Song
+            </Modal.Title>
+          </Modal.Header>
+          <Modal.Body className="text-dark">
+            You made a new composition, and it's absolutely <strong>Derpsical!</strong>
           </Modal.Body>
         </Modal>
       </div>

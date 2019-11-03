@@ -25,6 +25,10 @@ var ProfileSchema = new Schema({
   config: {
     type: Schema.Types.ObjectId,
     ref: "Config"
+  },
+  uid: {
+    type: Schema.Types.ObjectId,
+    ref: "User"
   }
 })
 

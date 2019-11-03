@@ -6,7 +6,7 @@ module.exports = {
   findAndUpdate: function (req, res) {
     console.log("profile update function ran")
     db.Profile
-      .update({ _id: req.params.id }, { $set: req.body })
+      .updateOne({ _id: req.params.id }, { $set: req.body })
       .then(update => {
         console.log(update)
         res.status(200).json(req.body)

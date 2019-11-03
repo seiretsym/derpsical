@@ -165,11 +165,7 @@ class Demo extends Component {
             // after all promises have been resolved...
             .then(chordFilter => {
               // filter the new chord stored in chordFilters to remove blanks
-              let filter = chordFilter.filter(note => {
-                if (note !== "") {
-                  return note
-                }
-              })
+              let filter = chordFilter.filter(note => note !== "")
               // update state to remove the notes that will be played next
               this.setState({
                 notes: filter
@@ -210,8 +206,8 @@ class Demo extends Component {
           <input name="tempo" type="text" className="btn btn-dark mb-1 text-left tempoInput" placeholder="tempo" value={this.state.tempo} onChange={this.handleChange} />
           <span className="btn ml-auto text-light d-none d-md-block d-lg-block">Please register for full access</span>
         </div>
-        <textarea className="text-light bg-dark m-0 rounded" rows="1" disabled>Lady Gaga - Remember Us This Way (Intro Verse)</textarea>
-        <textarea name="text" id="notes" rows="10" className="bg-dark text-light rounded" onChange={this.handleChange} value={this.state.text} spellcheck="false" disabled>
+        <textarea className="text-light bg-dark m-0 rounded" rows="1" value="Lady Gaga - Remember Us This Way (Intro Verse)" disabled></textarea>
+        <textarea name="text" id="notes" rows="10" className="bg-dark text-light rounded" onChange={this.handleChange} value={this.state.text} spellCheck="false" disabled>
         </textarea>
 
         <DimensionsProvider>

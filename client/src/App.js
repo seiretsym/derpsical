@@ -50,6 +50,7 @@ class App extends Component {
         displayname: "No User"
       }
     })
+    document.location.replace("./");
   }
 
   // auto sign in
@@ -92,7 +93,7 @@ class App extends Component {
             <Route exact path="/" component={Main} />
             <Route path="/profile" render={() => <Profile profile={this.state.profile} loggedin={this.state.login} />} />
             <Route path="/demo" component={Demo} />
-            <Route path="/composer" component={Composer} />
+            <Route path="/composer" render={() => <Composer profile={this.state.profile} loggedin={this.state.login} />} />
             <Route component={Main} />
           </Switch>
           <LoginModal

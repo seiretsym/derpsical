@@ -13,5 +13,14 @@ export default {
   },
   updatePassword: function (query, newpw) {
     return axios.put("/api/users", { query: query, pw: newpw })
+  },
+  createSong: function (data) {
+    return axios.post("/api/songs", data)
+  },
+  updateSong: function (id, data) {
+    return axios.put("/api/songs/" + id, data)
+  },
+  deleteSong: function (id, data) {
+    return axios.delete("/api/songs/" + id, data)
   }
 }
