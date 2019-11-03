@@ -4,11 +4,11 @@ import difference from 'lodash.difference';
 import PropTypes from 'prop-types';
 
 class CustomPiano extends Component {
-
   state = {
     notes: []
   }
 
+  // propTypes from react-piano for customization
   static propTypes = {
     noteRange: PropTypes.object.isRequired,
     activeNotes: PropTypes.arrayOf(PropTypes.number.isRequired).isRequired,
@@ -27,6 +27,7 @@ class CustomPiano extends Component {
   };
 
   componentDidUpdate(prevProps, prevState) {
+    // does piano magic when this component updates
     if (this.props.activeNotes !== prevProps.activeNotes) {
       this.handleNoteChanges({
         prevActiveNotes: prevProps.activeNotes || [],
@@ -50,33 +51,31 @@ class CustomPiano extends Component {
     const notesStopped = difference(prevActiveNotes, nextActiveNotes);
     const notesStarted = difference(nextActiveNotes, prevActiveNotes);
 
-    
-
     notesStarted.forEach((midiNumber) => {
       this.props.playNote(midiNumber);
     });
-    
+
     notesStopped.forEach((midiNumber) => {
       this.props.stopNote(midiNumber);
     });
   };
-  
-    render() {
-        const {
-            playNote,
-            stopNote,
-            ...pianoProps
-          } = this.props;
 
-        return (
-            <Piano
-            playNote={this.props.playNote}
-            stopNote={this.props.stopNote}
-            activeNotes={this.state.notes}
-            {...pianoProps}
-          />
-        )
-    }
+  render() {
+    const {
+      playNote,
+      stopNote,
+      ...pianoProps
+    } = this.props;
+
+    return (
+      <Piano
+        playNote={this.props.playNote}
+        stopNote={this.props.stopNote}
+        activeNotes={this.state.notes}
+        {...pianoProps}
+      />
+    )
+  }
 }
 
 export default CustomPiano

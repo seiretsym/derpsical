@@ -2,7 +2,7 @@ import React from "react";
 
 function Nav(props) {
   return (
-    <ul className="list-group">
+    <ul className="list-group mb-3">
       {props.links.map(link => {
         if (link.name === props.active) {
           return (

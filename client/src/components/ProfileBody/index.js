@@ -103,7 +103,6 @@ class ProfileBody extends Component {
         return (
           <div className="bg-secondary rounded p-3">
             <h1>Profile Settings</h1>
-            <hr />
             <form>
               <div className="form-group row">
                 <label className="col-sm-2 col-form-label">Name</label>

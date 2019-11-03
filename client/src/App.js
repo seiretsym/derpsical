@@ -8,6 +8,7 @@ import LoginModal from "./components/LoginModal"
 import Main from "./pages/Main"
 import Profile from "./pages/Profile"
 import Demo from "./pages/Demo"
+import Composer from "./pages/Composer"
 // Utility
 import API from "./utils";
 // Css
@@ -22,6 +23,7 @@ class App extends Component {
     }
   }
 
+  // update state to fill with user data after sign in
   handleUser = user => {
     if (!this.state.login) {
       this.setState({
@@ -32,6 +34,7 @@ class App extends Component {
     }
   }
 
+  // login modal toggler
   setModalShow = bool => {
     this.setState({ modalShow: bool })
   }
@@ -49,6 +52,7 @@ class App extends Component {
     })
   }
 
+  // auto sign in
   autoSignIn = user => {
     API.getUser(user).then(profile => {
       // if user successfully logs in...
@@ -88,6 +92,7 @@ class App extends Component {
             <Route exact path="/" component={Main} />
             <Route path="/profile" render={() => <Profile profile={this.state.profile} loggedin={this.state.login} />} />
             <Route path="/demo" component={Demo} />
+            <Route path="/composer" component={Composer} />
             <Route component={Main} />
           </Switch>
           <LoginModal

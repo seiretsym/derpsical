@@ -204,12 +204,13 @@ class Demo extends Component {
     return (
       <div className="bg-secondary p-3 rounded">
         <div className="d-flex">
-          <button className="btn btn-dark text-light mb-3" onClick={this.playNotes}>play</button>
-          <button className="btn btn-dark text-light ml-3 mb-3" onClick={this.stopNotes}>stop</button>
-          <label className="btn bg-dark text-light ml-3 mb-3 tempoLbl">Tempo</label>
-          <input name="tempo" type="text" className="btn btn-dark mb-3 text-left tempoInput" placeholder="tempo" value={this.state.tempo} onChange={this.handleChange} />
-          <span className="ml-auto mb-auto p-2 text-light d-none d-md-block d-lg-block">Please register for full access</span>
+          <button className="btn btn-dark text-light mb-1" onClick={this.playNotes}>play</button>
+          <button className="btn btn-dark text-light ml-3 mb-1" onClick={this.stopNotes}>stop</button>
+          <label className="btn bg-dark text-light ml-3 mb-1 tempoLbl">Tempo</label>
+          <input name="tempo" type="text" className="btn btn-dark mb-1 text-left tempoInput" placeholder="tempo" value={this.state.tempo} onChange={this.handleChange} />
+          <span className="btn ml-auto text-light d-none d-md-block d-lg-block">Please register for full access</span>
         </div>
+        <textarea className="text-light bg-dark m-0 rounded" rows="1" disabled>Lady Gaga - Remember Us This Way (Intro Verse)</textarea>
         <textarea name="text" id="notes" rows="10" className="bg-dark text-light rounded" onChange={this.handleChange} value={this.state.text} spellcheck="false" disabled>
         </textarea>
 

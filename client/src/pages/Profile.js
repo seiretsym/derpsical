@@ -25,7 +25,7 @@ class Profile extends Component {
         <div className="col-md-3 m-0">
           <ProfileNav links={this.state.links} handleClick={this.handleProfileLinkOnClick} active={this.state.view} />
         </div>
-        <div className="col-md m-0 pl-0">
+        <div className="col-md m-0">
           <ProfileBody view={this.state.view} profile={this.props.profile} loggedin={this.props.loggedin} />
         </div>
       </div>

@@ -10,10 +10,10 @@ class Nav extends Component {
           <button className="btn btn-clear dropdown-toggle dropdown-toggle-split text-light ml-0" data-toggle="dropdown">
             <span className="sr-only">Toggle Dropdown</span>
           </button>
-          <div className="dropdown-menu">
-            <a className="dropdown-item" href="/profile">Profile</a>
+          <div className="dropdown-menu bg-secondary">
+            <a className="dropdown-item btn btn-dd" href="/profile">Profile</a>
             <div className="dropdown-divider"></div>
-            <button className="btn btn-clear dropdown-item" onClick={() => this.props.handleLogout()}>Sign Out</button>
+            <button className="btn btn-dd dropdown-item" onClick={() => this.props.handleLogout()}>Sign Out</button>
           </div>
         </div>
       )

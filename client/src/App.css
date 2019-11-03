@@ -21,11 +21,20 @@
   color: #09d3ac;
 }
 
+.btn-dd {
+  color: #EEEEEE;
+}
+
 .md {
   position: absolute;
   width: 500px;
   height: 500px;
   background: rgba(0, 0, 0, 0.6);
+}
+
+.instructions {
+  overflow: auto;
+  height: 300px;
 }
 
 .md-main {
@@ -45,6 +54,7 @@
 
 .tempoInput {
   border-radius: 0px 5px 5px 0px !important;
+  width: 73.75px;
 }
 
 textarea {
@@ -57,6 +67,10 @@ textarea {
 textarea, button, input {
   outline: none !important;
   box-shadow: none !important;
+}
+
+.btn-clear:hover {
+  color: #CCCCCC !important;
 }
 
 /* Piano Stuff */
