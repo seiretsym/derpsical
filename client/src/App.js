@@ -4,11 +4,12 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Header from "./components/Header"
 import Nav from "./components/Nav";
 import LoginModal from "./components/LoginModal"
-import DimensionsProvider from "./components/DimensionsProvider";
 // Pages
 import Main from "./pages/Main"
 import Profile from "./pages/Profile"
 import Demo from "./pages/Demo"
+// Utility
+import API from "./utils";
 // Css
 import './App.css';
 
@@ -16,15 +17,17 @@ class App extends Component {
   state = {
     login: false,
     modalShow: false,
-    user: "No User",
+    profile: {
+      displayname: ""
+    }
   }
 
   handleUser = user => {
     if (!this.state.login) {
       this.setState({
-        user: user,
         login: true,
-        modalShow: false
+        modalShow: false,
+        profile: user
       })
     }
   }
@@ -34,44 +37,67 @@ class App extends Component {
   }
 
   handleLogout = () => {
+    // remove data stored in session storage
     sessionStorage.removeItem("user");
+    sessionStorage.removeItem("hash");
+    // set state back to default
     this.setState({
       login: false,
-      user: "No User",
+      profile: {
+        displayname: ""
+      }
     })
   }
+
+  autoSignIn = user => {
+    API.getUser(user).then(profile => {
+      // if user successfully logs in...
+      if (profile.data) {
+        this.setState({
+          login: true,
+          profile: profile.data.profile
+        })
+      } else {
+        // if not.. remove the sessionStorage data to prevent abuse
+        sessionStorage.removeItem("user")
+        sessionStorage.removeItem("hash")
+        sessionStorage.removeItem("auto")
+      }
+    }).catch(err => {
+      console.log(err)
+    })
+  }
+
   render() {
-    let user = sessionStorage.getItem("user");
+    let user = {
+      username: sessionStorage.getItem("user"),
+      password: sessionStorage.getItem("hash"),
+      auto: sessionStorage.getItem("auto")
+    }
+
     if (user && !this.state.login) {
-      this.setState({
-        login: true,
-        user: user
-      })
+      this.autoSignIn(user)
     }
 
     return (
-      <DimensionsProvider>
-        {({ containerWidth, containerHeight }) => (
-          <Router>
-            <div className="container">
-              <Header />
-              <Nav login={this.state.login} user={this.state.user} handleLogin={() => this.setModalShow(true)} handleLogout={this.handleLogout} />
-              <Switch>
-                <Route exact path="/" component={Main} />
-                <Route path="/profile" component={Profile} />
-                <Route path="/demo" component={Demo} />
-                <Route component={Main} />
-              </Switch>
-              <LoginModal
-                show={this.state.modalShow}
-                onHide={() => this.setModalShow(false)}
-                user={this.handleUser}
-              />
-            </div>
-          </Router>
-        )}
-      </DimensionsProvider>
-    );
+      <Router>
+        <div className="container">
+          <Header />
+          <Nav login={this.state.login} user={this.state.profile.displayname} handleLogin={() => this.setModalShow(true)} handleLogout={this.handleLogout} />
+          <Switch>
+            <Route exact path="/" component={Main} />
+            <Route path="/profile" render={() => <Profile profile={this.state.profile} loggedin={this.state.login} />} />
+            <Route path="/demo" component={Demo} />
+            <Route component={Main} />
+          </Switch>
+          <LoginModal
+            show={this.state.modalShow}
+            onHide={() => this.setModalShow(false)}
+            user={this.handleUser}
+          />
+        </div>
+      </Router>
+    )
   }
 }
 

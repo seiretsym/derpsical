@@ -5,6 +5,9 @@ var Schema = mongoose.Schema
 
 // create schema
 var SongSchema = new Schema({
+  name: {
+    type: String
+  },
   notes: {
     type: String
   },

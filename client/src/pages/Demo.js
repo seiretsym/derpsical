@@ -208,12 +208,12 @@ class Demo extends Component {
         <div className="d-flex">
           <button className="btn btn-dark text-light mb-3" onClick={this.playNotes}>play</button>
           <button className="btn btn-dark text-light ml-3 mb-3" onClick={this.stopNotes}>stop</button>
-          <button className="btn btn-dark text-light ml-3 mb-3 disabled">Tempo</button>
-          <input name="tempo" type="text" className="btn btn-dark mb-3 text-left" placeholder="tempo" value={this.state.tempo} onChange={this.handleChange} />
-          <span className="btn ml-auto text-light">Please register for full access</span>
+          <label className="btn bg-dark text-light ml-3 mb-3 tempoLbl">Tempo</label>
+          <input name="tempo" type="text" className="btn btn-dark mb-3 text-left tempoInput" placeholder="tempo" value={this.state.tempo} onChange={this.handleChange} />
+          <span className="ml-auto mb-auto p-2 text-light d-none d-md-block d-lg-block">Please register for full access</span>
         </div>
         <textarea name="text" id="notes" rows="10" className="bg-dark text-light rounded" onChange={this.handleChange} value={this.state.text} spellcheck="false" disabled>
-        </textarea><br />
+        </textarea>
 
         <DimensionsProvider>
           {({ containerWidth, containerHeight }) => (

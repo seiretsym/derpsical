@@ -11,7 +11,7 @@ var ProfileSchema = new Schema({
   },
   displayname: {
     type: String,
-    required: true,
+    required: true
   },
   inbox: [{
     type: Schema.Types.ObjectId,

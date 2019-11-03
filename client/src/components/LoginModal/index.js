@@ -90,11 +90,13 @@ class LoginModal extends Component {
           username: this.state.username,
           password: this.state.password
         }
-        API.getUser(user).then(data => {
-          if (data.data) {
+        API.getUser(user).then(profile => {
+          if (profile.data) {
             // user signed in, do something...
-            sessionStorage.setItem("user", this.state.username)
-            this.props.user(data.data.username)
+            sessionStorage.setItem("user", profile.data.username)
+            sessionStorage.setItem("hash", profile.data.password)
+            sessionStorage.setItem("auto", true)
+            this.props.user(profile.data.profile)
           } else {
             // wrong password
             document.getElementById("password").focus();
@@ -130,10 +132,12 @@ class LoginModal extends Component {
           username: this.state.username,
           password: this.state.password
         }
-        API.createUser(user).then(data => {
+        API.createUser(user).then(profile => {
           // do something after user registers
-          sessionStorage.setItem("user", this.state.username)
-          this.props.user(this.state.username)
+          sessionStorage.setItem("user", profile.data.username)
+          sessionStorage.setItem("hash", profile.data.password)
+          sessionStorage.setItem("auto", true)
+          this.props.user(profile.data.profile)
         }).catch(err => {
           if (err) {
             // username taken!
