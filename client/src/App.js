@@ -10,6 +10,7 @@ import Profile from "./pages/Profile";
 import Demo from "./pages/Demo";
 import Composer from "./pages/Composer";
 import Player from "./pages/Player";
+import User from "./pages/User";
 // Utility
 import API from "./utils";
 // Css
@@ -96,6 +97,7 @@ class App extends Component {
             <Route exact path="/demo" component={Demo} />
             <Route exact path="/composer" render={() => <Composer profile={this.state.profile} loggedin={this.state.login} />} />
             <Route exact path="/songs/:id" render={(props) => <Player {...props} />} />
+            <Route exact path="/profiles/:id" render={(props) => <User loggedin={this.state.login} uid={this.state.profile._id} {...props} />} />
             <Route component={Main} />
           </Switch>
           <LoginModal

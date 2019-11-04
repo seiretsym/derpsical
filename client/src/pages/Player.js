@@ -194,7 +194,7 @@ class Demo extends Component {
           <button className="btn btn-dark text-light ml-3 mb-1" onClick={this.stopNotes}>stop</button>
           <label className="btn bg-dark text-light ml-3 mb-1 tempoLbl">Tempo</label>
           <input name="tempo" type="text" className="btn btn-dark mb-1 text-left tempoInput" placeholder="tempo" value={this.state.tempo} disabled />
-          <span className="btn ml-auto text-light d-none d-md-block d-lg-block">Written by <a className="text-light" href={"../../users/" + this.state.cid}>{this.state.composer}</a></span>
+          <span className="btn ml-auto text-light d-none d-md-block d-lg-block">Written by <a className="text-light" href={"../../profiles/" + this.state.cid}>{this.state.composer}</a></span>
         </div>
         <textarea className="text-light bg-dark m-0 rounded" rows="1" value={this.state.title} disabled></textarea>
         <textarea name="text" id="notes" rows="10" className="bg-dark text-light rounded" value={this.state.text} spellCheck="false" disabled>
