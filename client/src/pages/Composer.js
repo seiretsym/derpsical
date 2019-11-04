@@ -60,7 +60,7 @@ class Composer extends Component {
     songTitle: "",
     infoModalShow: false,
     profile: null,
-    savedModalShow: false,
+    showSaveModal: false,
   }
 
   constructor(props) {
@@ -221,12 +221,14 @@ class Composer extends Component {
       title: this.state.songTitle,
       notes: this.state.noteScript,
       composer: this.state.profile._id,
+      tempo: this.state.tempo,
     }
     API.createSong(newSong)
       .then(song => {
+        console.log(song)
         // showModal
         this.setState({
-          savedModalShow: true,
+          showSaveModal: true,
           songId: song.data._id,
         })
       })
@@ -239,7 +241,7 @@ class Composer extends Component {
   // hide save modal
   hideSaveModal = () => {
     this.setState({
-      savedModalShow: false,
+      showSaveModal: false,
     })
   }
 
@@ -321,7 +323,7 @@ class Composer extends Component {
               </p>
               <hr />
               <h5>Tempo:</h5>
-              <p>Each note/chord separated by a comma is a Sixteenth note, so write with that in mind.</p>
+              <p>Each note/chord separated by a comma is an Eigth note, so write with that in mind.</p>
               <hr />
               <h5>Keymapping:</h5>
               <p>This can be configured in your Profile Settings.</p>
@@ -329,7 +331,7 @@ class Composer extends Component {
           </Modal.Body>
         </Modal>
         <Modal
-          show={this.state.SaveModalShow}
+          show={this.state.showSaveModal}
           onHide={this.hideSaveModal}
           size="md"
           aria-labelledby="contained-modal-title-vcenter"

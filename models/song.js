@@ -11,9 +11,16 @@ var SongSchema = new Schema({
   notes: {
     type: String
   },
+  tempo: {
+    type: Number,
+  },
   composer: {
     type: Schema.Types.ObjectId,
-    ref: "User"
+    ref: "Profile"
+  },
+  created: {
+    type: Date,
+    default: Date.now()
   },
   share: {
     type: Boolean,

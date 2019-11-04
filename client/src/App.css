@@ -47,6 +47,9 @@
   transform: translate(-50%,-50%);
 }
 
+.card-song {
+  width: 290px
+}
 .tempoLbl {
   border-radius: 5px 0px 0px 5px !important;
   border-right: 1px solid gray;

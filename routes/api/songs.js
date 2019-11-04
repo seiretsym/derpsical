@@ -1,12 +1,17 @@
 const router = require("express").Router();
 const songController = require("../../controllers/songController");
 
-// Matches with "/"
+// Matches with "api/songs"
+router.route("/recent")
+  .get(songController.findRecent);
+
 router.route("/")
-  .post(songController.create)
+  .get(songController.findAll)
+  .post(songController.create);
 
 router.route("/:id")
+  .get(songController.findOne)
   .put(songController.update)
-  .delete(songController.delete)
+  .delete(songController.delete);
 
 module.exports = router;

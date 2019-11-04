@@ -9,7 +9,8 @@ module.exports = {
     let newSong = {
       title: req.body.title,
       notes: req.body.notes,
-      composer: composer
+      composer: composer,
+      tempo: parseInt(req.body.tempo)
     }
     db.Song
       .create(newSong)
@@ -60,6 +61,47 @@ module.exports = {
       .catch(err => {
         console.log(err)
         res.status(500).json(err)
+      })
+  },
+  findRecent: function (req, res) {
+    db.Song
+      .find({})
+      .populate("composer", "displayname")
+      .sort({ created: -1 })
+      .limit(5)
+      .then(songs => {
+        console.log(songs)
+        res.status(200).json(songs)
+      })
+      .catch(err => {
+        console.log(err)
+        res.status(500).json(err)
+      })
+  },
+  findOne: function (req, res) {
+    db.Song
+      .find({ _id: req.params.id })
+      .populate("composer", "displayname")
+      .then(song => {
+        console.log(song)
+        res.status(200).json(song)
+      })
+      .catch(err => {
+        console.log(err)
+        res.status(404).json(err)
+      })
+  },
+  findAll: function (req, res) {
+    db.Song
+      .find({})
+      .populate("composer", "displayname")
+      .then(songs => {
+        console.log(songs)
+        res.status(200).json(songs)
+      })
+      .catch(err => {
+        console.log(err)
+        res.status(404).json(err)
       })
   }
 };
