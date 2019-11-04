@@ -1,14 +1,15 @@
 import React, { Component } from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 // Components
-import Header from "./components/Header"
+import Header from "./components/Header";
 import Nav from "./components/Nav";
-import LoginModal from "./components/LoginModal"
+import LoginModal from "./components/LoginModal";
 // Pages
-import Main from "./pages/Main"
-import Profile from "./pages/Profile"
-import Demo from "./pages/Demo"
-import Composer from "./pages/Composer"
+import Main from "./pages/Main";
+import Profile from "./pages/Profile";
+import Demo from "./pages/Demo";
+import Composer from "./pages/Composer";
+import Player from "./pages/Player";
 // Utility
 import API from "./utils";
 // Css
@@ -91,9 +92,10 @@ class App extends Component {
           <Nav login={this.state.login} user={this.state.profile.displayname} handleLogin={() => this.setModalShow(true)} handleLogout={this.handleLogout} />
           <Switch>
             <Route exact path="/" component={Main} />
-            <Route path="/profile" render={() => <Profile profile={this.state.profile} loggedin={this.state.login} />} />
-            <Route path="/demo" component={Demo} />
-            <Route path="/composer" render={() => <Composer profile={this.state.profile} loggedin={this.state.login} />} />
+            <Route exact path="/profile" render={() => <Profile profile={this.state.profile} loggedin={this.state.login} />} />
+            <Route exact path="/demo" component={Demo} />
+            <Route exact path="/composer" render={() => <Composer profile={this.state.profile} loggedin={this.state.login} />} />
+            <Route exact path="/songs/:id" render={(props) => <Player {...props} />} />
             <Route component={Main} />
           </Switch>
           <LoginModal

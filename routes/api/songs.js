@@ -4,14 +4,12 @@ const songController = require("../../controllers/songController");
 // Matches with "api/songs"
 router.route("/recent")
   .get(songController.findRecent);
-
-router.route("/")
-  .get(songController.findAll)
-  .post(songController.create);
-
 router.route("/:id")
   .get(songController.findOne)
   .put(songController.update)
   .delete(songController.delete);
+router.route("/")
+  .get(songController.findAll)
+  .post(songController.create);
 
 module.exports = router;
