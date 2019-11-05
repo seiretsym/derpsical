@@ -39,7 +39,14 @@ export default {
     return axios.get("/api/songs/" + id);
   },
   findAll: function () {
-    return axios.get("/api/songs")
-  }
+    return axios.get("/api/songs");
+  },
 
+  // message routes
+  sendMessage: function () {
+    return axios.post("/api/messages");
+  },
+  deleteMessage: function (id) {
+    return axios.delete("/api/messages/" + id);
+  },
 }

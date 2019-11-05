@@ -6,11 +6,13 @@ var Schema = mongoose.Schema
 // create schema
 var MessageSchema = new Schema({
   from: {
-    type: String,
-    required: true
+    type: Schema.Types.ObjectId,
+    ref: "Profile",
+    required: true,
   },
   to: {
-    type: String,
+    type: Schema.Types.ObjectId,
+    ref: "Profile",
     required: true,
   },
   message: {
