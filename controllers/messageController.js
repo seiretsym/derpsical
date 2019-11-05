@@ -19,7 +19,7 @@ module.exports = {
         console.log(msg);
         // push it to receiver's profile
         db.Profile
-          .updateOne({ _id: to }, { $push: { inbos: msg._id } }, { new: true })
+          .updateOne({ _id: to }, { $push: { inbox: msg._id } }, { new: true })
           .then(profile => {
             console.log(profile);
             res.status(200).json(msg);

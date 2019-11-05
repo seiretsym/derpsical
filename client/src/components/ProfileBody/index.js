@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import Modal from "react-bootstrap/Modal";
+import Button from "react-bootstrap/Button";
 import SongCard from "../SongCard";
+import MsgCard from "../MsgCard";
 import API from "../../utils"
 
 class ProfileBody extends Component {
@@ -9,12 +11,14 @@ class ProfileBody extends Component {
     fullname: "full name",
     displayname: "display name",
     songs: [],
-    messages: [],
+    inbox: [],
     config: [],
     loggedin: false,
     password: "",
     confirm: "",
     profileModalShow: false,
+    showReplyModal: false,
+    showReplyConfirm: false,
     key: [
       "", "", "", "", "", "", "", "", "", "", "", "",
       "", "", "", "", "", "", "", "", "", "", "", "",
@@ -123,6 +127,29 @@ class ProfileBody extends Component {
     console.log(keymap)
   }
 
+  handleDelete = id => {
+    console.log("delete id: " + id)
+  }
+
+  handleReply = id => {
+    this.setState({
+      showReplyModal: true
+    })
+    console.log("reply to: " + id)
+  }
+
+  hideReplyModal = () => {
+    this.setState({
+      showReplyModal: false
+    })
+  }
+
+  hideReplyConfirm = () => {
+    this.setState({
+      showReplyConfirm: false
+    })
+  }
+
   componentDidUpdate() {
     if (this.props.loggedin && !this.state.loggedin) {
       API.getProfile(this.props.profile._id)
@@ -132,10 +159,11 @@ class ProfileBody extends Component {
             fullname: this.props.profile.fullname,
             displayname: this.props.profile.displayname,
             songs: profile.data[0].songs,
-            messages: this.props.profile.messages,
             config: this.props.profile.config,
+            inbox: profile.data[0].inbox,
             loggedin: true
           })
+          console.log(this.state)
         })
     }
   }
@@ -182,8 +210,7 @@ class ProfileBody extends Component {
               onHide={this.hideProfileModal}
               size="sm"
               aria-labelledby="contained-modal-title-vcenter"
-              centered
-            >
+              centered>
               <Modal.Header className="text-dark" closeButton>
                 <Modal.Title id="contained-modal-title-vcenter">
                   Profile Updated!
@@ -196,9 +223,20 @@ class ProfileBody extends Component {
         return (
           <div className="bg-secondary rounded p-3">
             <h1>Messages</h1>
-            <p>
-              Consectetur eu velit nulla ullamco. Nulla dolore irure cillum nostrud cillum esse ipsum ut commodo qui adipisicing duis. Fugiat sit cupidatat ipsum tempor tempor sunt.
-            </p>
+            <hr />
+            {this.state.inbox.map(message => {
+              return (
+                <MsgCard
+                  message={message.message}
+                  sender={message.from.displayname}
+                  from={message.from._id}
+                  handleReply={this.handleReply}
+                  handleDelete={this.handleDelete}
+                  id={message._id}
+                  key={message._id}
+                />
+              )
+            })}
           </div>
         )
       case "Songs":
@@ -209,16 +247,51 @@ class ProfileBody extends Component {
             <div className="d-flex flex-wrap">
               {this.state.songs.map(song => {
                 return (
-                  <SongCard
-                    title={song.title}
-                    id={song._id}
-                    cid={song.composer}
-                    displayname={this.state.displayname}
-                    created={song.created}
-                    key={song.title} />
+                  <div>
+                    <SongCard
+                      title={song.title}
+                      id={song._id}
+                      cid={song.composer}
+                      displayname={this.state.displayname}
+                      created={song.created}
+                      key={song.title} />
+                  </div>
                 )
               })}
             </div>
+            <Modal
+              show={this.state.showReplyModal}
+              onHide={this.hideReplyModal}
+              size="sm"
+              aria-labelledby="contained-modal-title-vcenter"
+              centered>
+              <Modal.Header className="text-dark" closeButton>
+                <Modal.Title id="contained-modal-title-vcenter">
+                  Send Message
+                </Modal.Title>
+              </Modal.Header>
+              <Modal.Body className="text-dark">
+                Message:
+                <textarea name="message" rows="3" className="bg-secondary rounded text-light" val={this.state.message} onChange={this.handleInputChange}></textarea>
+              </Modal.Body>
+              <Modal.Footer>
+                <Button onClick={this.handleReply} className="btn-dark">Reply</Button>
+                <Button onClick={this.hideReplyModal} className="btn-dark">Close</Button>
+              </Modal.Footer>
+            </Modal>
+
+            <Modal
+              show={this.state.showReplyConfirm}
+              onHide={this.hideReplyConfirm}
+              size="sm"
+              aria-labelledby="contained-modal-title-vcenter"
+              centered>
+              <Modal.Header className="text-dark" closeButton>
+                <Modal.Title id="contained-modal-title-vcenter">
+                  Reply Sent!
+                </Modal.Title>
+              </Modal.Header>
+            </Modal>
           </div>
         )
       case "Config":

@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import API from "../utils";
 import SongCard from "../components/SongCard";
+import Modal from "react-bootstrap/Modal";
+import Button from "react-bootstrap/Button";
 
 class User extends Component {
 
@@ -10,6 +12,8 @@ class User extends Component {
       songs: [],
     },
     loggedin: false,
+    showMessageModal: false,
+    message: "",
   }
 
   componentDidMount() {
@@ -31,7 +35,58 @@ class User extends Component {
   }
 
   handleMessage = () => {
-    console.log(this.state)
+    if (this.state.loggedin) {
+      let message = {
+        to: this.props.match.params.id,
+        from: this.state.uid,
+        message: this.state.message
+      }
+      API.sendMessage(message)
+        .then(data => {
+          this.setState({
+            message: ""
+          })
+          this.hideMessageModal();
+          this.showConfirmModal("Message Sent!");
+        })
+        .catch(err => {
+          this.showConfirmModal("There was an error!");
+        })
+      console.log(message)
+    }
+  }
+
+  showConfirmModal = string => {
+    this.setState({
+      showConfirmModal: true,
+      confirmMessage: string
+    })
+  }
+
+  hideConfirmModal = () => {
+    this.setState({
+      showConfirmModal: false,
+      confirmMessage: "",
+    })
+  }
+
+  showMessageModal = () => {
+    this.setState({
+      showMessageModal: true,
+    })
+  }
+
+  hideMessageModal = () => {
+    this.setState({
+      showMessageModal: false,
+    })
+  }
+
+  handleInputChange = event => {
+    const { name, value } = event.target;
+    this.setState({
+      [name]: value
+    })
   }
 
   render() {
@@ -42,7 +97,7 @@ class User extends Component {
           <h5>{this.state.profile.displayname}</h5>
           <hr />
           <div className="text-left">
-            <button className="btn btn-clear text-light" onClick={this.handleMessage}>Send Message</button>
+            <button className="btn btn-clear text-light" onClick={this.showMessageModal}>Send Message</button>
           </div>
         </div>
         <div className="col-md bg-secondary p-3 mx-3 rounded">
@@ -62,6 +117,40 @@ class User extends Component {
             })}
           </div>
         </div>
+        <Modal
+          show={this.state.showMessageModal}
+          onHide={this.hideMessageModal}
+          size="sm"
+          aria-labelledby="contained-modal-title-vcenter"
+          centered
+        >
+          <Modal.Header className="text-dark" closeButton>
+            <Modal.Title id="contained-modal-title-vcenter">
+              Send Message
+            </Modal.Title>
+          </Modal.Header>
+          <Modal.Body className="text-dark">
+            Message:
+            <textarea name="message" rows="3" className="bg-secondary rounded text-light" val={this.state.message} onChange={this.handleInputChange}></textarea>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button onClick={this.handleMessage} className="btn-dark">Send Message</Button>
+            <Button onClick={this.hideMessageModal} className="btn-dark">Close</Button>
+          </Modal.Footer>
+        </Modal>
+        <Modal
+          show={this.state.showConfirmModal}
+          onHide={this.hideConfirmModal}
+          size="sm"
+          aria-labelledby="contained-modal-title-vcenter"
+          centered
+        >
+          <Modal.Header className="text-dark" closeButton>
+            <Modal.Title id="contained-modal-title-vcenter">
+              {this.state.confirmMessage}
+            </Modal.Title>
+          </Modal.Header>
+        </Modal>
       </div>
     )
   }

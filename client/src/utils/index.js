@@ -43,8 +43,8 @@ export default {
   },
 
   // message routes
-  sendMessage: function () {
-    return axios.post("/api/messages");
+  sendMessage: function (message) {
+    return axios.post("/api/messages", message);
   },
   deleteMessage: function (id) {
     return axios.delete("/api/messages/" + id);

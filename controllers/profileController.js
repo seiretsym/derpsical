@@ -22,6 +22,14 @@ module.exports = {
     db.Profile
       .find({ _id: ObjectId(req.params.id) })
       .populate("songs")
+      .populate({
+        path: "inbox",
+        model: "Message",
+        populate: {
+          path: "from",
+          model: "Profile"
+        }
+      })
       .then(profile => {
         console.log(profile)
         res.status(200).json(profile)
