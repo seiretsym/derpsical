@@ -227,91 +227,60 @@ class ProfileBody extends Component {
             <h1>Keyboard Keymapping</h1>
             <hr />
             <form>
-              <label className="mr-3">3rd Octave:</label>
-              <input id="key0" type="text" className="configKeys" placeholder="c3" />
-              <input id="key1" type="text" className="configKeys" placeholder="c#3" />
-              <input id="key2" type="text" className="configKeys" placeholder="d3" />
-              <input id="key3" type="text" className="configKeys" placeholder="d#3" />
-              <input id="key4" type="text" className="configKeys" placeholder="e3" />
-              <input id="key5" type="text" className="configKeys" placeholder="f3" />
-              <input id="key6" type="text" className="configKeys" placeholder="f#3" />
-              <input id="key7" type="text" className="configKeys" placeholder="g3" />
-              <input id="key8" type="text" className="configKeys" placeholder="g#3" />
-              <input id="key9" type="text" className="configKeys" placeholder="a3" />
-              <input id="key10" type="text" className="configKeys" placeholder="a#3" />
-              <input id="key11" type="text" className="configKeys" placeholder="b3" />
-              <br />
-              <label className="mr-3">4th Octave:</label>
-              <input id="key12" type="text" className="configKeys" placeholder="c4" />
-              <input id="key13" type="text" className="configKeys" placeholder="c#4" />
-              <input id="key14" type="text" className="configKeys" placeholder="d4" />
-              <input id="key15" type="text" className="configKeys" placeholder="d#4" />
-              <input id="key16" type="text" className="configKeys" placeholder="e4" />
-              <input id="key17" type="text" className="configKeys" placeholder="f4" />
-              <input id="key18" type="text" className="configKeys" placeholder="f#4" />
-              <input id="key19" type="text" className="configKeys" placeholder="g4" />
-              <input id="key20" type="text" className="configKeys" placeholder="g#4" />
-              <input id="key21" type="text" className="configKeys" placeholder="a4" />
-              <input id="key22" type="text" className="configKeys" placeholder="a#4" />
-              <input id="key23" type="text" className="configKeys" placeholder="b4" />
-              <br />
-              <label className="mr-3">5th Octave:</label>
-              <input id="key24" type="text" className="configKeys" placeholder="c5" />
-              <input id="key25" type="text" className="configKeys" placeholder="c#5" />
-              <input id="key26" type="text" className="configKeys" placeholder="d5" />
-              <input id="key27" type="text" className="configKeys" placeholder="d#5" />
-              <input id="key28" type="text" className="configKeys" placeholder="e5" />
-              <input id="key29" type="text" className="configKeys" placeholder="f5" />
-              <input id="key30" type="text" className="configKeys" placeholder="f#5" />
-              <input id="key31" type="text" className="configKeys" placeholder="g5" />
-              <input id="key32" type="text" className="configKeys" placeholder="g#5" />
-              <input id="key33" type="text" className="configKeys" placeholder="a5" />
-              <input id="key34" type="text" className="configKeys" placeholder="a#5" />
-              <input id="key35" type="text" className="configKeys" placeholder="b5" />
-              <br />
-              <label className="mr-3">6th Octave:</label>
-              <input id="key36" type="text" className="configKeys" placeholder="c6" />
-              <input id="key37" type="text" className="configKeys" placeholder="c#6" />
-              <input id="key38" type="text" className="configKeys" placeholder="d6" />
-              <input id="key39" type="text" className="configKeys" placeholder="d#6" />
-              <input id="key40" type="text" className="configKeys" placeholder="e6" />
-              <input id="key41" type="text" className="configKeys" placeholder="f6" />
-              <input id="key42" type="text" className="configKeys" placeholder="f#6" />
-              <input id="key43" type="text" className="configKeys" placeholder="g6" />
-              <input id="key44" type="text" className="configKeys" placeholder="g#6" />
-              <input id="key45" type="text" className="configKeys" placeholder="a6" />
-              <input id="key46" type="text" className="configKeys" placeholder="a#6" />
-              <input id="key47" type="text" className="configKeys" placeholder="b6" />
-              <br />
-              <label className="mr-3">7th Octave:</label>
-              <input id="key48" type="text" className="configKeys" placeholder="c7" />
-              <input id="key49" type="text" className="configKeys" placeholder="c#7" />
-              <input id="key50" type="text" className="configKeys" placeholder="d7" />
-              <input id="key51" type="text" className="configKeys" placeholder="d#7" />
-              <input id="key52" type="text" className="configKeys" placeholder="e7" />
-              <input id="key53" type="text" className="configKeys" placeholder="f7" />
-              <input id="key54" type="text" className="configKeys" placeholder="f#7" />
-              <input id="key55" type="text" className="configKeys" placeholder="g7" />
-              <input id="key56" type="text" className="configKeys" placeholder="g#7" />
-              <input id="key57" type="text" className="configKeys" placeholder="a7" />
-              <input id="key58" type="text" className="configKeys" placeholder="a#7" />
-              <input id="key59" type="text" className="configKeys" placeholder="b7" />
-              <br />
-              <label className="mr-3">8th Octave:</label>
-              <input id="key60" type="text" className="configKeys" placeholder="c8" />
-              <input id="key61" type="text" className="configKeys" placeholder="c#8" />
-              <input id="key62" type="text" className="configKeys" placeholder="d8" />
-              <input id="key63" type="text" className="configKeys" placeholder="d#8" />
-              <input id="key64" type="text" className="configKeys" placeholder="e8" />
-              <input id="key65" type="text" className="configKeys" placeholder="f8" />
-              <input id="key66" type="text" className="configKeys" placeholder="f#8" />
-              <input id="key67" type="text" className="configKeys" placeholder="g8" />
-              <input id="key68" type="text" className="configKeys" placeholder="g#8" />
-              <input id="key69" type="text" className="configKeys" placeholder="a8" />
-              <input id="key70" type="text" className="configKeys" placeholder="a#8" />
-              <input id="key71" type="text" className="configKeys" placeholder="b8" />
+              {this.state.key.map((key, index) => {
+                let octave = 3 + Math.floor((index / 12));
+                let keyid = "key" + index;
+                let note = index % 12;
+                switch (note) {
+                  case 0:
+                    if (octave === 3) {
+                      return (
+                        <span>
+                          <label className="mr-3" key={"octave" + octave}>3rd Octave:</label>
+                          <input id={keyid} type="text" className="configKeys" placeholder={"c" + octave} key={keyid} />
+                        </span>
+                      )
+                    } else {
+                      return (
+                        <span>
+                          <label className="mr-3" key={"octave" + octave}>{octave}th Octave:</label>
+                          <input id={keyid} type="text" className="configKeys" placeholder={"c" + octave} key={keyid} />
+                        </span>
+                      )
+                    }
+                  case 1:
+                    return <input id={keyid} type="text" className="configKeys" placeholder={"c#" + octave} key={keyid} />
+                  case 2:
+                    return <input id={keyid} type="text" className="configKeys" placeholder={"d" + octave} key={keyid} />
+                  case 3:
+                    return <input id={keyid} type="text" className="configKeys" placeholder={"d#" + octave} key={keyid} />
+                  case 4:
+                    return <input id={keyid} type="text" className="configKeys" placeholder={"e" + octave} key={keyid} />
+                  case 5:
+                    return <input id={keyid} type="text" className="configKeys" placeholder={"f" + octave} key={keyid} />
+                  case 6:
+                    return <input id={keyid} type="text" className="configKeys" placeholder={"f#" + octave} key={keyid} />
+                  case 7:
+                    return <input id={keyid} type="text" className="configKeys" placeholder={"g" + octave} key={keyid} />
+                  case 8:
+                    return <input id={keyid} type="text" className="configKeys" placeholder={"g#" + octave} key={keyid} />
+                  case 9:
+                    return <input id={keyid} type="text" className="configKeys" placeholder={"a" + octave} key={keyid} />
+                  case 10:
+                    return <input id={keyid} type="text" className="configKeys" placeholder={"a#" + octave} key={keyid} />
+                  case 11:
+                    return (
+                      <span>
+                        <input id={keyid} type="text" className="configKeys" placeholder={"b" + octave} key={keyid} />
+                        <br />
+                      </span>
+                    )
+                  default:
+                    return
+                }
+              })}
               <hr />
-              <input type="submit" className="btn btn-dark" value="Save" onClick={this.handleConfigSubmit} />
+              <input type="submit" className="btn btn-dark" value="Save" onClick={this.handleConfigSubmit} key="submit" />
             </form>
 
           </div>
