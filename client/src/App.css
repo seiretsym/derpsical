@@ -51,6 +51,10 @@
   width: 290px
 }
 
+.configKeys {
+  width: 50px;
+}
+
 .header-brand {
   font-family: "Bowlby One SC", cursive !important;
   font-size: 75px;
