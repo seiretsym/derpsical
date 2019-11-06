@@ -57,7 +57,6 @@ class User extends Component {
         document.getElementById("message").setAttribute("placeholder", "Sending an empty message isn't cute.");
         document.getElementById("message").focus();
       }
-
     }
   }
 
@@ -110,11 +109,12 @@ class User extends Component {
           <hr />
           <div className="d-flex flex-wrap profile-song-list overflow-auto">
             {this.state.profile.songs.map(song => {
+              console.log(song);
               return (
                 <SongCard
                   title={song.title}
                   id={song._id}
-                  cid={song.composer._id}
+                  cid={song.composer}
                   displayname={this.state.profile.displayname}
                   created={song.created}
                   key={song.title} />
@@ -127,8 +127,7 @@ class User extends Component {
           onHide={this.hideMessageModal}
           size="sm"
           aria-labelledby="contained-modal-title-vcenter"
-          centered
-        >
+          centered>
           <Modal.Header className="text-dark" closeButton>
             <Modal.Title id="contained-modal-title-vcenter">
               Send Message
