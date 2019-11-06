@@ -14,43 +14,6 @@ const noteRange = {
   last: MidiNumbers.fromNote('b7'),
 };
 
-const keyboardShortcuts = KeyboardShortcuts.create({
-  firstNote: noteRange.first,
-  lastNote: noteRange.last,
-  // notes: keys are generated from left to right starting from firstNote
-  // each object contains a natural (white key) and its sharp/flat.
-  // if natural starts on a key with no flat behind it, it will use the sharp key bind
-  // which makes the next object key's flat keybind void
-  keyboardConfig:
-    [
-      { natural: 'z', flat: 'a', sharp: 's' },
-      { natural: 'x', flat: 's', sharp: 'd' },
-      { natural: 'c', flat: 'd', sharp: 'f' },
-      { natural: 'v', flat: 'f', sharp: 'g' },
-      { natural: 'b', flat: 'g', sharp: 'h' },
-      { natural: 'n', flat: 'h', sharp: 'j' },
-      { natural: 'm', flat: 'j', sharp: 'k' },
-      { natural: ',', flat: 'k', sharp: 'l' },
-      { natural: '.', flat: 'l', sharp: ';' },
-      { natural: '/', flat: ';', sharp: "'" },
-      { natural: '', flat: '', sharp: '' },
-      { natural: '', flat: '', sharp: '' },
-      { natural: '', flat: '', sharp: '' },
-      { natural: '', flat: '', sharp: '' },
-      { natural: 'q', flat: '1', sharp: '2' },
-      { natural: 'w', flat: '2', sharp: '3' },
-      { natural: 'e', flat: '3', sharp: '4' },
-      { natural: 'r', flat: '4', sharp: '5' },
-      { natural: 't', flat: '5', sharp: '6' },
-      { natural: 'y', flat: '6', sharp: '7' },
-      { natural: 'u', flat: '7', sharp: '8' },
-      { natural: 'i', flat: '8', sharp: '9' },
-      { natural: 'o', flat: '9', sharp: '0' },
-      { natural: 'p', flat: '0', sharp: '-' },
-      { natural: "[", flat: '-', sharp: '=' },
-    ],
-});
-
 class Composer extends Component {
   state = {
     notes: [],
@@ -61,6 +24,7 @@ class Composer extends Component {
     infoModalShow: false,
     profile: null,
     showSaveModal: false,
+    keyboardConfig: [{ natural: '', flat: '', sharp: '' }, { natural: '', flat: '', sharp: '' }],
   }
 
   constructor(props) {
@@ -245,17 +209,87 @@ class Composer extends Component {
     })
   }
 
+  updateKeyboardShortcuts = array => {
+    array = array.map(item => {
+      if (item === null) {
+        return ""
+      } else {
+        return item
+      }
+    });
+
+    let shortcuts = [
+      { natural: array[0], flat: '', sharp: array[1] },
+      { natural: array[2], flat: '', sharp: array[3] },
+      { natural: array[4], flat: '', sharp: array[5] },
+      { natural: array[6], flat: '', sharp: array[7] },
+      { natural: array[8], flat: '', sharp: array[9] },
+      { natural: array[10], flat: '', sharp: array[11] },
+      { natural: array[12], flat: '', sharp: array[13] },
+      { natural: array[14], flat: '', sharp: array[15] },
+      { natural: array[16], flat: '', sharp: array[17] },
+      { natural: array[18], flat: '', sharp: array[19] },
+      { natural: array[20], flat: '', sharp: array[21] },
+      { natural: array[22], flat: '', sharp: array[23] },
+      { natural: array[24], flat: '', sharp: array[25] },
+      { natural: array[26], flat: '', sharp: array[27] },
+      { natural: array[28], flat: '', sharp: array[29] },
+      { natural: array[30], flat: '', sharp: array[31] },
+      { natural: array[32], flat: '', sharp: array[33] },
+      { natural: array[34], flat: '', sharp: array[35] },
+      { natural: array[36], flat: '', sharp: array[37] },
+      { natural: array[38], flat: '', sharp: array[39] },
+      { natural: array[40], flat: '', sharp: array[41] },
+      { natural: array[42], flat: '', sharp: array[43] },
+      { natural: array[44], flat: '', sharp: array[45] },
+      { natural: array[46], flat: '', sharp: array[47] },
+      { natural: array[48], flat: '', sharp: array[49] },
+      { natural: array[50], flat: '', sharp: array[51] },
+      { natural: array[52], flat: '', sharp: array[53] },
+      { natural: array[54], flat: '', sharp: array[55] },
+      { natural: array[56], flat: '', sharp: array[57] },
+      { natural: array[58], flat: '', sharp: array[59] },
+      { natural: array[60], flat: '', sharp: array[61] },
+      { natural: array[62], flat: '', sharp: array[63] },
+      { natural: array[64], flat: '', sharp: array[65] },
+      { natural: array[66], flat: '', sharp: array[67] },
+      { natural: array[68], flat: '', sharp: array[69] },
+      { natural: array[70], flat: '', sharp: array[71] },
+      { natural: array[72], flat: '', sharp: '' },
+    ]
+
+    this.setState({
+      keyboardConfig: shortcuts
+    })
+  }
+
   // make sure we get all the data we need from props
   componentDidUpdate() {
     if (this.props.loggedin && !this.state.loggedin) {
-      this.setState({
-        profile: this.props.profile,
-        loggedin: true,
-      })
+      API.getProfile(this.props.profile._id)
+        .then(profile => {
+          this.setState({
+            profile: profile.data[0],
+            loggedin: true,
+          })
+          this.updateKeyboardShortcuts(profile.data[0].config.keymap)
+        })
     }
   }
 
   render() {
+
+    const keyboardShortcuts = KeyboardShortcuts.create({
+      firstNote: noteRange.first,
+      lastNote: noteRange.last,
+      // notes: keys are generated from left to right starting from firstNote
+      // each object contains a natural (white key) and its sharp/flat.
+      // if natural starts on a key with no flat behind it, it will use the sharp key bind
+      // which makes the next object key's flat keybind void
+      keyboardConfig: this.state.keyboardConfig,
+    });
+
+
     return (
       <div>
         <div className="bg-secondary p-3 rounded">

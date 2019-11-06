@@ -6,7 +6,7 @@ var Schema = mongoose.Schema
 // create schema
 var ConfigSchema = new Schema({
   keymap: {
-    type: String
+    type: Array
   }
 })
 

@@ -49,4 +49,9 @@ export default {
   deleteMessage: function (id) {
     return axios.delete("/api/messages/" + id);
   },
+
+  // configs routes
+  updateConfig: function (id, config) {
+    return axios.put("/api/configs/" + id, config);
+  }
 }

@@ -20,28 +20,46 @@ module.exports = {
           .then(userModel => {
             console.log(userModel);
             // create a profile for user
-            // append part of the UID to displayname
-            let id = String(userModel._id);
-            let suffix = id.slice(5, 10);
-            db.Profile
-              .create({ fullname: userModel.username, displayname: userModel.username + "_derp_" + suffix, uid: userModel._id })
-              // then attach profile to user
-              .then(profile => {
-                db.User.updateOne(userModel, { $set: { profile: profile._id } })
-                  .then(() => {
-                    res.json(userModel)
+            // lets give this user default configs
+            let keymap = [
+              "", "", "", "", "", "", "", "", "", "", "", "",
+              "", "", "", "", "", "", "", "", "", "", "", "",
+              "", "", "", "", "", "", "", "", "", "", "", "",
+              "", "", "", "", "", "", "", "", "", "", "", "",
+              "", "", "", "", "", "", "", "", "", "", "", "",
+              "", "", "", "", "", "", "", "", "", "", "", "",
+            ]
+            db.Config
+              .create({ keymap: keymap })
+              .then(config => {
+                // append part of the UID to displayname
+                let id = String(userModel._id);
+                let suffix = id.slice(5, 10);
+                db.Profile
+                  .create({ fullname: userModel.username, displayname: userModel.username + "_derp_" + suffix, uid: userModel._id, config: config._id })
+                  // then attach profile to user
+                  .then(profile => {
+                    db.User.updateOne(userModel, { $set: { profile: profile._id } })
+                      .then(() => {
+                        res.json(userModel)
+                      })
+                      // error handling
+                      .catch(err => {
+                        console.log("user update error");
+                        console.log(err);
+                        res.status(422).json(err);
+                      })
                   })
                   // error handling
                   .catch(err => {
-                    console.log("user update error");
+                    console.log("profile create error");
                     console.log(err);
                     res.status(422).json(err);
                   })
               })
-              // error handling
+              // more error handling
               .catch(err => {
-                console.log("profile create error");
-                console.log(err);
+                console.log(err)
                 res.status(422).json(err);
               })
           })

@@ -30,6 +30,7 @@ module.exports = {
           model: "Profile"
         }
       })
+      .populate("config")
       .then(profile => {
         console.log(profile)
         res.status(200).json(profile)
