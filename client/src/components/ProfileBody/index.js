@@ -231,6 +231,8 @@ class ProfileBody extends Component {
             } else {
               return keyCode
             }
+          } else {
+            return key
           }
         })
       }
