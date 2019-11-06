@@ -10,6 +10,8 @@ class ProfileBody extends Component {
     _id: "",
     fullname: "full name",
     displayname: "display name",
+    confirmMessage: "",
+    message: "",
     songs: [],
     inbox: [],
     config: [],
@@ -18,7 +20,7 @@ class ProfileBody extends Component {
     confirm: "",
     profileModalShow: false,
     showReplyModal: false,
-    showReplyConfirm: false,
+    showConfirmModal: false,
     key: [
       "", "", "", "", "", "", "", "", "", "", "", "",
       "", "", "", "", "", "", "", "", "", "", "", "",
@@ -128,14 +130,48 @@ class ProfileBody extends Component {
   }
 
   handleDelete = id => {
-    console.log("delete id: " + id)
+    API.deleteMessage(id)
+      .then(conf => {
+        this.showConfirmModal("Message Deleted!");
+        this.getProfile();
+      })
+      .catch(err => {
+        this.showConfirmModal("There was a error!");
+      })
   }
 
   handleReply = id => {
     this.setState({
-      showReplyModal: true
+      showReplyModal: true,
+      to: id,
     })
-    console.log("reply to: " + id)
+  }
+
+  handleSendMessage = () => {
+    if (this.state.loggedin) {
+      if (this.state.message.length > 0) {
+        let message = {
+          to: this.state.to,
+          from: this.state._id,
+          message: this.state.message
+        }
+        API.sendMessage(message)
+          .then(data => {
+            this.setState({
+              message: ""
+            })
+            this.hideReplyModal();
+            this.showConfirmModal("Reply Sent!");
+          })
+          .catch(err => {
+            this.hideReplyModal();
+            this.showConfirmModal("There was an error!");
+          })
+      } else {
+        document.getElementById("message").setAttribute("placeholder", "Sending an empty message isn't cute.");
+        document.getElementById("message").focus();
+      }
+    }
   }
 
   hideReplyModal = () => {
@@ -144,28 +180,40 @@ class ProfileBody extends Component {
     })
   }
 
-  hideReplyConfirm = () => {
+  showConfirmModal = string => {
     this.setState({
-      showReplyConfirm: false
+      showConfirmModal: true,
+      confirmMessage: string
+    })
+  }
+
+  hideConfirmModal = () => {
+    this.setState({
+      showConfirmModal: false,
+      confirmMessage: "",
     })
   }
 
   componentDidUpdate() {
     if (this.props.loggedin && !this.state.loggedin) {
-      API.getProfile(this.props.profile._id)
-        .then(profile => {
-          this.setState({
-            _id: this.props.profile._id,
-            fullname: this.props.profile.fullname,
-            displayname: this.props.profile.displayname,
-            songs: profile.data[0].songs,
-            config: this.props.profile.config,
-            inbox: profile.data[0].inbox,
-            loggedin: true
-          })
-          console.log(this.state)
-        })
+      this.getProfile();
     }
+  }
+
+  getProfile = () => {
+    API.getProfile(this.props.profile._id)
+      .then(profile => {
+        this.setState({
+          _id: this.props.profile._id,
+          fullname: this.props.profile.fullname,
+          displayname: this.props.profile.displayname,
+          songs: profile.data[0].songs,
+          config: this.props.profile.config,
+          inbox: profile.data[0].inbox,
+          loggedin: true
+        })
+        console.log(this.state)
+      })
   }
 
   render() {
@@ -237,6 +285,39 @@ class ProfileBody extends Component {
                 />
               )
             })}
+            <Modal
+              show={this.state.showReplyModal}
+              onHide={this.hideReplyModal}
+              size="sm"
+              aria-labelledby="contained-modal-title-vcenter"
+              centered>
+              <Modal.Header className="text-dark" closeButton>
+                <Modal.Title id="contained-modal-title-vcenter">
+                  Send Message
+                </Modal.Title>
+              </Modal.Header>
+              <Modal.Body className="text-dark">
+                Message:
+                <textarea id="message" name="message" rows="3" className="bg-dark rounded text-light" val={this.state.message} onChange={this.handleInputChange} placeholder="enter reply here..."></textarea>
+              </Modal.Body>
+              <Modal.Footer>
+                <Button onClick={this.handleSendMessage} className="btn-dark">Reply</Button>
+                <Button onClick={this.hideReplyModal} className="btn-dark">Close</Button>
+              </Modal.Footer>
+            </Modal>
+
+            <Modal
+              show={this.state.showConfirmModal}
+              onHide={this.hideConfirmModal}
+              size="sm"
+              aria-labelledby="contained-modal-title-vcenter"
+              centered>
+              <Modal.Header className="text-dark" closeButton>
+                <Modal.Title id="contained-modal-title-vcenter">
+                  {this.state.confirmMessage}
+                </Modal.Title>
+              </Modal.Header>
+            </Modal>
           </div>
         )
       case "Songs":
@@ -259,39 +340,6 @@ class ProfileBody extends Component {
                 )
               })}
             </div>
-            <Modal
-              show={this.state.showReplyModal}
-              onHide={this.hideReplyModal}
-              size="sm"
-              aria-labelledby="contained-modal-title-vcenter"
-              centered>
-              <Modal.Header className="text-dark" closeButton>
-                <Modal.Title id="contained-modal-title-vcenter">
-                  Send Message
-                </Modal.Title>
-              </Modal.Header>
-              <Modal.Body className="text-dark">
-                Message:
-                <textarea name="message" rows="3" className="bg-secondary rounded text-light" val={this.state.message} onChange={this.handleInputChange}></textarea>
-              </Modal.Body>
-              <Modal.Footer>
-                <Button onClick={this.handleReply} className="btn-dark">Reply</Button>
-                <Button onClick={this.hideReplyModal} className="btn-dark">Close</Button>
-              </Modal.Footer>
-            </Modal>
-
-            <Modal
-              show={this.state.showReplyConfirm}
-              onHide={this.hideReplyConfirm}
-              size="sm"
-              aria-labelledby="contained-modal-title-vcenter"
-              centered>
-              <Modal.Header className="text-dark" closeButton>
-                <Modal.Title id="contained-modal-title-vcenter">
-                  Reply Sent!
-                </Modal.Title>
-              </Modal.Header>
-            </Modal>
           </div>
         )
       case "Config":

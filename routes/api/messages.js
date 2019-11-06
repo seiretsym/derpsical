@@ -3,7 +3,9 @@ const messageController = require("../../controllers/messageController");
 
 // Matches with "api/messages"
 router.route("/")
-  .post(messageController.create)
+  .post(messageController.create);
+
+router.route("/:id")
   .delete(messageController.delete);
 
 module.exports = router;

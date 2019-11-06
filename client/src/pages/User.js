@@ -36,23 +36,28 @@ class User extends Component {
 
   handleMessage = () => {
     if (this.state.loggedin) {
-      let message = {
-        to: this.props.match.params.id,
-        from: this.state.uid,
-        message: this.state.message
-      }
-      API.sendMessage(message)
-        .then(data => {
-          this.setState({
-            message: ""
+      if (this.state.message.length > 0) {
+        let message = {
+          to: this.props.match.params.id,
+          from: this.state.uid,
+          message: this.state.message
+        }
+        API.sendMessage(message)
+          .then(data => {
+            this.setState({
+              message: ""
+            })
+            this.hideMessageModal();
+            this.showConfirmModal("Message Sent!");
           })
-          this.hideMessageModal();
-          this.showConfirmModal("Message Sent!");
-        })
-        .catch(err => {
-          this.showConfirmModal("There was an error!");
-        })
-      console.log(message)
+          .catch(err => {
+            this.showConfirmModal("There was an error!");
+          })
+      } else {
+        document.getElementById("message").setAttribute("placeholder", "Sending an empty message isn't cute.");
+        document.getElementById("message").focus();
+      }
+
     }
   }
 
@@ -131,7 +136,7 @@ class User extends Component {
           </Modal.Header>
           <Modal.Body className="text-dark">
             Message:
-            <textarea name="message" rows="3" className="bg-secondary rounded text-light" val={this.state.message} onChange={this.handleInputChange}></textarea>
+            <textarea id="message" name="message" rows="3" className="bg-dark rounded text-light" val={this.state.message} onChange={this.handleInputChange} placeholder="write your message here..."></textarea>
           </Modal.Body>
           <Modal.Footer>
             <Button onClick={this.handleMessage} className="btn-dark">Send Message</Button>

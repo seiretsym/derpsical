@@ -38,8 +38,9 @@ module.exports = {
   },
   // delete message
   delete: function (req, res) {
+    console.log(req.params.id)
     db.Message
-      .remove({ _id: req.params.id })
+      .remove({ _id: ObjectId(req.params.id) })
       .then(message => {
         console.log(message)
         res.status(200).json(message);
