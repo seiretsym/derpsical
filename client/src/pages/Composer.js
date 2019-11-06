@@ -180,7 +180,6 @@ class Composer extends Component {
 
   // save song
   saveSong = () => {
-    console.log(this.state.profile)
     let newSong = {
       title: this.state.songTitle,
       notes: this.state.noteScript,
@@ -189,7 +188,6 @@ class Composer extends Component {
     }
     API.createSong(newSong)
       .then(song => {
-        console.log(song)
         // showModal
         this.setState({
           showSaveModal: true,
@@ -293,7 +291,6 @@ class Composer extends Component {
       // which makes the next object key's flat keybind void
       keyboardConfig: this.state.keyboardConfig,
     });
-
 
     return (
       <div>

@@ -8,6 +8,7 @@ import LoginModal from "./components/LoginModal";
 import Main from "./pages/Main";
 import Profile from "./pages/Profile";
 import Demo from "./pages/Demo";
+import Editor from "./pages/Editor";
 import Composer from "./pages/Composer";
 import Player from "./pages/Player";
 import User from "./pages/User";
@@ -97,6 +98,7 @@ class App extends Component {
             <Route exact path="/demo" component={Demo} />
             <Route exact path="/composer" render={() => <Composer profile={this.state.profile} loggedin={this.state.login} />} />
             <Route exact path="/songs/:id" render={(props) => <Player {...props} />} />
+            <Route exact path="/composer/:id" render={(props) => <Editor {...props} />} />
             <Route exact path="/profiles/:id" render={(props) => <User loggedin={this.state.login} uid={this.state.profile._id} {...props} />} />
             <Route component={Main} />
           </Switch>

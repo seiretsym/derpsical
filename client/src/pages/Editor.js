@@ -3,6 +3,8 @@ import { KeyboardShortcuts, MidiNumbers } from 'react-piano';
 import CustomPiano from '../components/CustomPiano';
 import SoundfontProvider from '../components/SoundfontProvider';
 import DimensionsProvider from '../components/DimensionsProvider';
+import API from "../utils";
+import Modal from "react-bootstrap/Modal";
 
 const audioContext = new (window.AudioContext || window.webkitAudioContext)();
 const soundfontHostname = 'https://d1pzp51pvbm36p.cloudfront.net';
@@ -19,47 +21,37 @@ const keyboardShortcuts = KeyboardShortcuts.create({
   // each object contains a natural (white key) and its sharp/flat.
   // if natural starts on a key with no flat behind it, it will use the sharp key bind
   // which makes the next object key's flat keybind void
-  keyboardConfig:
-    [
-      { natural: 'z', flat: 'a', sharp: 's' },
-      { natural: 'x', flat: 's', sharp: 'd' },
-      { natural: 'c', flat: 'd', sharp: 'f' },
-      { natural: 'v', flat: 'f', sharp: 'g' },
-      { natural: 'b', flat: 'g', sharp: 'h' },
-      { natural: 'n', flat: 'h', sharp: 'j' },
-      { natural: 'm', flat: 'j', sharp: 'k' },
-      { natural: ',', flat: 'k', sharp: 'l' },
-      { natural: '.', flat: 'l', sharp: ';' },
-      { natural: '/', flat: ';', sharp: "'" },
-      { natural: '', flat: '', sharp: '' },
-      { natural: '', flat: '', sharp: '' },
-      { natural: '', flat: '', sharp: '' },
-      { natural: '', flat: '', sharp: '' },
-      { natural: 'q', flat: '1', sharp: '2' },
-      { natural: 'w', flat: '2', sharp: '3' },
-      { natural: 'e', flat: '3', sharp: '4' },
-      { natural: 'r', flat: '4', sharp: '5' },
-      { natural: 't', flat: '5', sharp: '6' },
-      { natural: 'y', flat: '6', sharp: '7' },
-      { natural: 'u', flat: '7', sharp: '8' },
-      { natural: 'i', flat: '8', sharp: '9' },
-      { natural: 'o', flat: '9', sharp: '0' },
-      { natural: 'p', flat: '0', sharp: '-' },
-      { natural: "[", flat: '-', sharp: '=' },
-    ],
+  keyboardConfig: [],
 });
 
 class Demo extends Component {
   state = {
     notes: [],
-    text: "[d6], [e6], [d6], [c6], [a4c5e5a5], [], [], [], [a4c5e5], [], [], [], [a4c5e5], [], [], [], [a4c5e5d6], [e6], [d6], [c6], [f4a4c5a5], [g5], [], [], [f4a4c5], [], [], [], [f4a4c5], [], [], [], [f4a4c5], [], [g5], [], [g4c5e5c6], [], [g5], [c6], [g4c5e5], [], [g5], [c6], [g4c5e5], [], [c6], [c6], [g4c5e5c6], [], [d6], [b5], [g4b4d5], [], [], [], [g4b4d5], [], [], [], [g4b4d5], [], [], [], [g4b4d5d6], [e6], [d6], [c6], [a4c5e5a5], [], [], [], [a4c5e5], [], [], [], [a4c5e5], [], [], [], [a4c5e5d6], [e6], [d6], [c6], [f4a4c5a5], [g5], [], [], [f4a4c5], [], [], [], [f4a4c5], [], [], [], [f4a4c5], [], [g5], [], [g4c5e5c6], [], [g5], [c6], [g4c5e5], [], [g5], [c6], [g4c5e5], [], [c6], [c6], [g4c5e5c6], [], [d6], [b5], [g4b4d5], [], [], [], [g4b4d5], [], [], [], [g4b4d5], [], [], [], [g4b4d5], [], [], [],",
+    noteScript: "",
     prevNotes: [],
-    tempo: "120",
+    tempo: "",
+    songTitle: "",
+    composer: "",
+    cid: "",
+    showSaveModal: false,
   }
 
   constructor(props) {
     super(props)
     this.events = []
+  }
+
+  componentDidMount() {
+    API.findOne(this.props.match.params.id)
+      .then(song => {
+        this.setState({
+          noteScript: song.data[0].notes,
+          composer: song.data[0].composer.displayname,
+          songTitle: song.data[0].title,
+          cid: song.data[0].composer._id,
+          tempo: song.data[0].tempo,
+        })
+      })
   }
 
   playNotes = () => {
@@ -196,6 +188,34 @@ class Demo extends Component {
     this.setState({ [name]: value })
   }
 
+  updateSong = () => {
+    console.log(this.props.match.params.id)
+    let songData = {
+      title: this.state.songTitle,
+      notes: this.state.noteScript,
+      tempo: this.state.tempo,
+    }
+    API.updateSong(this.props.match.params.id, songData)
+      .then(song => {
+        // showModal
+        this.setState({
+          showSaveModal: true,
+          songId: song.data._id,
+        })
+      })
+      .catch(err => {
+        // this should never happen unless connection sucks
+        console.log(err)
+      })
+  }
+
+  // hide save modal
+  hideSaveModal = () => {
+    this.setState({
+      showSaveModal: false,
+    })
+  }
+
   render() {
     return (
       <div className="bg-secondary p-3 rounded">
@@ -203,12 +223,11 @@ class Demo extends Component {
           <button className="btn btn-dark text-light mb-1" onClick={this.playNotes}>Play</button>
           <button className="btn btn-dark text-light ml-3 mb-1" onClick={this.stopNotes}>Stop</button>
           <label className="btn bg-dark text-light ml-3 mb-1 tempoLbl">Tempo</label>
-          <input name="tempo" type="text" className="btn btn-dark mb-1 text-left tempoInput" placeholder="tempo" value={this.state.tempo} onChange={this.handleChange} />
-          <span className="btn ml-auto text-light d-none d-md-block d-lg-block">Please register for full access</span>
+          <input name="tempo" type="text" className="btn btn-dark mb-1 text-left tempoInput" placeholder="tempo" onChange={this.handleChange} value={this.state.tempo} />
+          <button className="btn btn-dark text-light ml-3 mb-1" onClick={this.updateSong}>Save</button>
         </div>
-        <textarea className="text-light bg-dark m-0 rounded" rows="1" value="Lady Gaga - Remember Us This Way (Intro Verse)" disabled></textarea>
-        <textarea name="text" id="notes" rows="10" className="bg-dark text-light rounded" onChange={this.handleChange} value={this.state.text} spellCheck="false" disabled>
-        </textarea>
+        <textarea name="songTitle" className="text-light bg-dark m-0 rounded" rows="1" onChange={this.handleChange} value={this.state.songTitle} />
+        <textarea name="noteScript" id="notes" rows="10" className="bg-dark text-light rounded" onChange={this.handleChange} value={this.state.noteScript} spellCheck="false" />
 
         <DimensionsProvider>
           {({ containerWidth, containerHeight }) => (
@@ -231,6 +250,22 @@ class Demo extends Component {
             />
           )}
         </DimensionsProvider>
+        <Modal
+          show={this.state.showSaveModal}
+          onHide={this.hideSaveModal}
+          size="md"
+          aria-labelledby="contained-modal-title-vcenter"
+          centered
+        >
+          <Modal.Header className="text-dark" closeButton>
+            <Modal.Title id="contained-modal-title-vcenter">
+              Song Updated!
+            </Modal.Title>
+          </Modal.Header>
+          <Modal.Body className="text-dark">
+            Fantastic update! It's so <strong>Derp</strong>, it's <strong>Musical!</strong>
+          </Modal.Body>
+        </Modal>
       </div>
     );
   }

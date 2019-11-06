@@ -1,10 +1,9 @@
 import React, { Component } from "react";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
-import SongCard from "../SongCard";
+import SongCard2 from "../SongCard2";
 import MsgCard from "../MsgCard";
 import API from "../../utils"
-import { ENETDOWN } from "constants";
 
 class ProfileBody extends Component {
   state = {
@@ -132,6 +131,7 @@ class ProfileBody extends Component {
       })
   }
 
+  // delete message
   handleDelete = id => {
     API.deleteMessage(id)
       .then(conf => {
@@ -143,6 +143,7 @@ class ProfileBody extends Component {
       })
   }
 
+  // show reply modal
   handleReply = id => {
     this.setState({
       showReplyModal: true,
@@ -150,6 +151,7 @@ class ProfileBody extends Component {
     })
   }
 
+  // send reply
   handleSendMessage = () => {
     if (this.state.loggedin) {
       if (this.state.message.length > 0) {
@@ -177,12 +179,14 @@ class ProfileBody extends Component {
     }
   }
 
+  // hide reply modal
   hideReplyModal = () => {
     this.setState({
       showReplyModal: false
     })
   }
 
+  // show confirm modal
   showConfirmModal = string => {
     this.setState({
       showConfirmModal: true,
@@ -190,6 +194,7 @@ class ProfileBody extends Component {
     })
   }
 
+  // hide confirm modal
   hideConfirmModal = () => {
     this.setState({
       showConfirmModal: false,
@@ -197,12 +202,7 @@ class ProfileBody extends Component {
     })
   }
 
-  componentDidUpdate() {
-    if (this.props.loggedin && !this.state.loggedin) {
-      this.getProfile();
-    }
-  }
-
+  // get user profile
   getProfile = () => {
     API.getProfile(this.props.profile._id)
       .then(profile => {
@@ -218,6 +218,7 @@ class ProfileBody extends Component {
       })
   }
 
+  // handle input for config keymapping
   handleConfigInput = (event, index) => {
     event.preventDefault();
     const keyCode = event.key;
@@ -237,6 +238,26 @@ class ProfileBody extends Component {
         })
       }
     })
+  }
+
+  // delete song
+  deleteSong = id => {
+    API.deleteSong(id)
+      .then(aww => {
+        this.showConfirmModal("Song deleted. :(")
+        this.getProfile();
+      })
+  }
+
+  // redirect to editor
+  editSong = id => {
+    document.location.replace("../../composer/" + id);
+  }
+
+  componentDidUpdate() {
+    if (this.props.loggedin && !this.state.loggedin) {
+      this.getProfile();
+    }
   }
 
   render() {
@@ -352,16 +373,30 @@ class ProfileBody extends Component {
               {this.state.songs.map(song => {
                 return (
                   <div>
-                    <SongCard
+                    <SongCard2
                       title={song.title}
                       id={song._id}
                       cid={song.composer}
                       displayname={this.state.displayname}
                       created={song.created}
-                      key={song.title} />
+                      key={song.title}
+                      handleEdit={this.editSong}
+                      handleDelete={this.deleteSong} />
                   </div>
                 )
               })}
+              <Modal
+                show={this.state.showConfirmModal}
+                onHide={this.hideConfirmModal}
+                size="sm"
+                aria-labelledby="contained-modal-title-vcenter"
+                centered>
+                <Modal.Header className="text-dark" closeButton>
+                  <Modal.Title id="contained-modal-title-vcenter">
+                    {this.state.confirmMessage}
+                  </Modal.Title>
+                </Modal.Header>
+              </Modal>
             </div>
           </div>
         )

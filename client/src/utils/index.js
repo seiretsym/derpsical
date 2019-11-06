@@ -27,8 +27,8 @@ export default {
   updateSong: function (id, data) {
     return axios.put("/api/songs/" + id, data);
   },
-  deleteSong: function (id, data) {
-    return axios.delete("/api/songs/" + id, data);
+  deleteSong: function (id) {
+    return axios.delete("/api/songs/" + id);
   },
 
   // song search routes

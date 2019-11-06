@@ -97,7 +97,7 @@ class User extends Component {
     return (
       <div className="row">
         <div className="col-md-3 bg-secondary p-3 mx-3 rounded text-center">
-          <img src="../../profile.png" className="img-fluid" />
+          <img src="../../profile.png" className="img-fluid" alt={this.state.profile.displayname} />
           <h5>{this.state.profile.displayname}</h5>
           <hr />
           <div className="text-left">

@@ -35,11 +35,12 @@ module.exports = {
   },
   // update a song
   update: function (req, res) {
+    console.log(req.body)
     let id = ObjectId(req.params.id);
-    let uid = ObjectId(req.body.uid);
     db.Song
-      .update({ _id: id, composer: uid }, { $set: req.body })
+      .updateOne({ _id: id }, { $set: req.body })
       .then(song => {
+        console.log(song)
         res.status(200).json(song);
       })
       // error handling
@@ -51,9 +52,8 @@ module.exports = {
   // delete a song
   delete: function (req, res) {
     let id = ObjectId(req.params.id);
-    let uid = ObjectId(req.body.uid);
     db.Song
-      .remove({ _id: id, composer: uid })
+      .remove({ _id: id })
       .then(aww => {
         res.status(200).json(aww)
       })
