@@ -8,13 +8,14 @@ class Main extends Component {
     songs: [],
     pages: [],
     pageViews: [],
-    currentPage: "1",
+    currentPage: 0,
   }
 
   componentDidMount() {
     this.listSongs("created")
   }
 
+  // get songs
   listSongs = sortMethod => {
     API.findAndSortBy(sortMethod)
       .then(songs => {
@@ -25,9 +26,9 @@ class Main extends Component {
       })
   }
 
+  // setup each page view
   setupView = () => {
     let pages = Math.ceil(this.state.songs.length / 6)
-    console.log(pages)
     let pageNav = [];
     let songs = [];
     for (let p = 0; p < pages; p++) {
@@ -58,6 +59,7 @@ class Main extends Component {
     })
   }
 
+  // change page view
   changePage = event => {
     const { name } = event.target;
 
@@ -75,7 +77,7 @@ class Main extends Component {
   render() {
     return (
       <div className="bg-secondary text-light rounded p-3" >
-        <h1 className="m-0">Latest Songs</h1>
+        <h1 className="m-0">Songs</h1>
         <div className="nav m-0">
           Sort by:
           <button name="title" className="btn btn-clear text-light m-0 p-0 ml-3" onClick={() => this.listSongs("title")}>Title</button>
@@ -92,7 +94,7 @@ class Main extends Component {
           {this.state.pageViews.map((pageView, index) => {
             if (index === 0) {
               return (
-                <div id={index} className="d-flex flex-wrap">
+                <div id={index} className="d-flex flex-wrap" key={index}>
                   {pageView.map(song => {
                     return song
                   })}
@@ -100,7 +102,7 @@ class Main extends Component {
               )
             } else {
               return (
-                <div id={index} className="d-none">
+                <div id={index} className="d-none" key={index}>
                   {pageView.map(song => {
                     return song
                   })}

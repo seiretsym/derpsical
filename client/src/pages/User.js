@@ -109,7 +109,6 @@ class User extends Component {
           <hr />
           <div className="d-flex flex-wrap profile-song-list overflow-auto">
             {this.state.profile.songs.map(song => {
-              console.log(song);
               return (
                 <SongCard
                   title={song.title}

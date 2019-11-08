@@ -17,6 +17,7 @@ import API from "./utils";
 // Css
 import './App.css';
 
+
 class App extends Component {
   state = {
     login: false,
@@ -72,7 +73,7 @@ class App extends Component {
         sessionStorage.removeItem("auto")
       }
     }).catch(err => {
-      console.log(err)
+      console.log("Attempt to auto-sign in with no data")
     })
   }
 
@@ -82,8 +83,7 @@ class App extends Component {
       password: sessionStorage.getItem("hash"),
       auto: sessionStorage.getItem("auto")
     }
-
-    if (user && !this.state.login) {
+    if (user.auto && !this.state.login) {
       this.autoSignIn(user)
     }
 
@@ -105,7 +105,6 @@ class App extends Component {
           <LoginModal
             show={this.state.modalShow}
             onHide={() => this.setModalShow(false)}
-            onUser={this.handleUser}
           />
         </div>
       </Router>

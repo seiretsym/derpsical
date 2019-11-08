@@ -56,7 +56,6 @@ class Demo extends Component {
 
   playNotes = () => {
     let string = this.state.text.toLowerCase().replace(/\s/g, "");
-    console.log(string)
     let chords = string.split(",")
     let timer = 0;
     Promise.all(chords.map(chord => {
@@ -189,7 +188,6 @@ class Demo extends Component {
   }
 
   updateSong = () => {
-    console.log(this.props.match.params.id)
     let songData = {
       title: this.state.songTitle,
       notes: this.state.noteScript,

@@ -15,7 +15,14 @@ class ProfileBody extends Component {
     songs: [],
     inbox: [],
     config: {
-      keymap: [],
+      keymap: [
+        "", "", "", "", "", "", "", "", "", "", "", "",
+        "", "", "", "", "", "", "", "", "", "", "", "",
+        "", "", "", "", "", "", "", "", "", "", "", "",
+        "", "", "", "", "", "", "", "", "", "", "", "",
+        "", "", "", "", "", "", "", "", "", "", "", "",
+        "", "", "", "", "", "", "", "", "", "", "", ""
+      ],
     },
     loggedin: false,
     password: "",
@@ -124,7 +131,7 @@ class ProfileBody extends Component {
     let id = this.state.config._id;
     API.updateConfig(id, data)
       .then(update => {
-        console.log("updated")
+        this.showConfirmModal("Keymaps Updated!")
       })
       .catch(err => {
         console.log(err)
@@ -372,17 +379,15 @@ class ProfileBody extends Component {
             <div className="d-flex flex-wrap">
               {this.state.songs.map(song => {
                 return (
-                  <div>
-                    <SongCard2
-                      title={song.title}
-                      id={song._id}
-                      cid={song.composer}
-                      displayname={this.state.displayname}
-                      created={song.created}
-                      key={song.title}
-                      handleEdit={this.editSong}
-                      handleDelete={this.deleteSong} />
-                  </div>
+                  <SongCard2
+                    title={song.title}
+                    id={song._id}
+                    cid={song.composer}
+                    displayname={this.state.displayname}
+                    created={song.created}
+                    key={song.title}
+                    handleEdit={this.editSong}
+                    handleDelete={this.deleteSong} />
                 )
               })}
               <Modal
@@ -414,43 +419,43 @@ class ProfileBody extends Component {
                   case 0:
                     if (octave === 3) {
                       return (
-                        <span>
+                        <span key={index}>
                           <label className="mr-3" key={"octave" + octave}>3rd Octave:</label>
-                          <input id={keyid} type="text" className="configKeys" value={this.state.config.keymap[index]} onKeyUp={event => this.handleConfigInput(event, index)} placeholder={"c" + octave} key={keyid} autoComplete="off" />
+                          <input id={keyid} type="text" className="configKeys" value={this.state.config.keymap[index]} onKeyUp={event => this.handleConfigInput(event, index)} placeholder={"c" + octave} key={keyid} autoComplete="off" readOnly />
                         </span>
                       )
                     } else {
                       return (
-                        <span>
+                        <span key={index}>
                           <label className="mr-3" key={"octave" + octave}>{octave}th Octave:</label>
-                          <input id={keyid} type="text" className="configKeys" value={this.state.config.keymap[index]} onKeyUp={event => this.handleConfigInput(event, index)} placeholder={"c" + octave} key={keyid} autoComplete="off" />
+                          <input id={keyid} type="text" className="configKeys" value={this.state.config.keymap[index]} onKeyUp={event => this.handleConfigInput(event, index)} placeholder={"c" + octave} key={keyid} autoComplete="off" readOnly />
                         </span>
                       )
                     }
                   case 1:
-                    return <input id={keyid} type="text" className="configKeys" value={this.state.config.keymap[index]} onKeyUp={event => this.handleConfigInput(event, index)} placeholder={"c#" + octave} key={keyid} autoComplete="off" />
+                    return <input id={keyid} type="text" className="configKeys" value={this.state.config.keymap[index]} onKeyUp={event => this.handleConfigInput(event, index)} placeholder={"c#" + octave} key={keyid} autoComplete="off" readOnly />
                   case 2:
-                    return <input id={keyid} type="text" className="configKeys" value={this.state.config.keymap[index]} onKeyUp={event => this.handleConfigInput(event, index)} placeholder={"d" + octave} key={keyid} autoComplete="off" />
+                    return <input id={keyid} type="text" className="configKeys" value={this.state.config.keymap[index]} onKeyUp={event => this.handleConfigInput(event, index)} placeholder={"d" + octave} key={keyid} autoComplete="off" readOnly />
                   case 3:
-                    return <input id={keyid} type="text" className="configKeys" value={this.state.config.keymap[index]} onKeyUp={event => this.handleConfigInput(event, index)} placeholder={"d#" + octave} key={keyid} autoComplete="off" />
+                    return <input id={keyid} type="text" className="configKeys" value={this.state.config.keymap[index]} onKeyUp={event => this.handleConfigInput(event, index)} placeholder={"d#" + octave} key={keyid} autoComplete="off" readOnly />
                   case 4:
-                    return <input id={keyid} type="text" className="configKeys" value={this.state.config.keymap[index]} onKeyUp={event => this.handleConfigInput(event, index)} placeholder={"e" + octave} key={keyid} autoComplete="off" />
+                    return <input id={keyid} type="text" className="configKeys" value={this.state.config.keymap[index]} onKeyUp={event => this.handleConfigInput(event, index)} placeholder={"e" + octave} key={keyid} autoComplete="off" readOnly />
                   case 5:
-                    return <input id={keyid} type="text" className="configKeys" value={this.state.config.keymap[index]} onKeyUp={event => this.handleConfigInput(event, index)} placeholder={"f" + octave} key={keyid} autoComplete="off" />
+                    return <input id={keyid} type="text" className="configKeys" value={this.state.config.keymap[index]} onKeyUp={event => this.handleConfigInput(event, index)} placeholder={"f" + octave} key={keyid} autoComplete="off" readOnly />
                   case 6:
-                    return <input id={keyid} type="text" className="configKeys" value={this.state.config.keymap[index]} onKeyUp={event => this.handleConfigInput(event, index)} placeholder={"f#" + octave} key={keyid} autoComplete="off" />
+                    return <input id={keyid} type="text" className="configKeys" value={this.state.config.keymap[index]} onKeyUp={event => this.handleConfigInput(event, index)} placeholder={"f#" + octave} key={keyid} autoComplete="off" readOnly />
                   case 7:
-                    return <input id={keyid} type="text" className="configKeys" value={this.state.config.keymap[index]} onKeyUp={event => this.handleConfigInput(event, index)} placeholder={"g" + octave} key={keyid} autoComplete="off" />
+                    return <input id={keyid} type="text" className="configKeys" value={this.state.config.keymap[index]} onKeyUp={event => this.handleConfigInput(event, index)} placeholder={"g" + octave} key={keyid} autoComplete="off" readOnly />
                   case 8:
-                    return <input id={keyid} type="text" className="configKeys" value={this.state.config.keymap[index]} onKeyUp={event => this.handleConfigInput(event, index)} placeholder={"g#" + octave} key={keyid} autoComplete="off" />
+                    return <input id={keyid} type="text" className="configKeys" value={this.state.config.keymap[index]} onKeyUp={event => this.handleConfigInput(event, index)} placeholder={"g#" + octave} key={keyid} autoComplete="off" readOnly />
                   case 9:
-                    return <input id={keyid} type="text" className="configKeys" value={this.state.config.keymap[index]} onKeyUp={event => this.handleConfigInput(event, index)} placeholder={"a" + octave} key={keyid} autoComplete="off" />
+                    return <input id={keyid} type="text" className="configKeys" value={this.state.config.keymap[index]} onKeyUp={event => this.handleConfigInput(event, index)} placeholder={"a" + octave} key={keyid} autoComplete="off" readOnly />
                   case 10:
-                    return <input id={keyid} type="text" className="configKeys" value={this.state.config.keymap[index]} onKeyUp={event => this.handleConfigInput(event, index)} placeholder={"a#" + octave} key={keyid} autoComplete="off" />
+                    return <input id={keyid} type="text" className="configKeys" value={this.state.config.keymap[index]} onKeyUp={event => this.handleConfigInput(event, index)} placeholder={"a#" + octave} key={keyid} autoComplete="off" readOnly />
                   case 11:
                     return (
-                      <span>
-                        <input id={keyid} type="text" className="configKeys" value={this.state.config.keymap[index]} onKeyUp={event => this.handleConfigInput(event, index)} placeholder={"b" + octave} key={keyid} autoComplete="off" />
+                      <span key={index}>
+                        <input id={keyid} type="text" className="configKeys" value={this.state.config.keymap[index]} onKeyUp={event => this.handleConfigInput(event, index)} placeholder={"b" + octave} key={keyid} autoComplete="off" readOnly />
                         <br />
                       </span>
                     )
@@ -462,6 +467,18 @@ class ProfileBody extends Component {
               <hr />
               <input type="submit" className="btn btn-dark" value="Save" onClick={this.handleConfigSubmit} key="submit" />
             </form>
+            <Modal
+              show={this.state.showConfirmModal}
+              onHide={this.hideConfirmModal}
+              size="sm"
+              aria-labelledby="contained-modal-title-vcenter"
+              centered>
+              <Modal.Header className="text-dark" closeButton>
+                <Modal.Title id="contained-modal-title-vcenter">
+                  {this.state.confirmMessage}
+                </Modal.Title>
+              </Modal.Header>
+            </Modal>
           </div>
         )
       default:

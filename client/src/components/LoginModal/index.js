@@ -76,16 +76,13 @@ class LoginModal extends Component {
     } else {
       // validate form inputs
       if (this.state.username === "") {
-        console.log("blank username")
         document.getElementById("username").focus();
         this.setState({ usernameph: "this cannot be empty!" })
       } else if (this.state.password === "") {
-        console.log("blank password")
         document.getElementById("password").focus();
         this.setState({ passwordph: "invalid password" })
       } else {
         // process sign in
-        console.log("sign in")
         let user = {
           username: this.state.username,
           password: this.state.password
@@ -102,6 +99,9 @@ class LoginModal extends Component {
             document.getElementById("password").focus();
             this.setState({ password: "", passwordph: "invalid password" })
           }
+        }).catch(err => {
+          document.getElementById("password").focus();
+          this.setState({ password: "", passwordph: "invalid password" })
         })
       }
     }
@@ -115,15 +115,12 @@ class LoginModal extends Component {
     } else {
       // validate form inputs
       if (this.state.username === "") {
-        console.log("blank username")
         document.getElementById("username").focus();
         this.setState({ usernameph: "this cannot be empty!" })
       } else if (this.state.password === "") {
-        console.log("blank password")
         document.getElementById("password").focus();
         this.setState({ passwordph: "invalid password" })
       } else if (this.state.confirm !== this.state.password) {
-        console.log("passwords don't match")
         document.getElementById("confirm").focus();
         this.setState({ confirm: "", confirmph: "doesn't match password" })
       } else {
