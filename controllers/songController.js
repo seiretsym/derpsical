@@ -103,5 +103,22 @@ module.exports = {
         console.log(err)
         res.status(404).json(err)
       })
+  },
+  findAndSortBy: function (req, res) {
+    let sortType = {
+      [req.params.id]: -1,
+    }
+    db.Song
+      .find({})
+      .populate("composer", "displayname")
+      .sort(sortType)
+      .then(songs => {
+        console.log(songs)
+        res.status(200).json(songs)
+      })
+      .catch(err => {
+        console.log(err)
+        res.status(500).json(err)
+      })
   }
 };

@@ -41,6 +41,9 @@ export default {
   findAll: function () {
     return axios.get("/api/songs");
   },
+  findAndSortBy: function (sortType) {
+    return axios.get("/api/songs/sort/" + sortType)
+  },
 
   // message routes
   sendMessage: function (message) {

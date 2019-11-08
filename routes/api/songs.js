@@ -2,6 +2,8 @@ const router = require("express").Router();
 const songController = require("../../controllers/songController");
 
 // Matches with "api/songs"
+router.route("/sort/:id")
+  .get(songController.findAndSortBy);
 router.route("/recent")
   .get(songController.findRecent);
 router.route("/:id")
