@@ -73,7 +73,7 @@ class App extends Component {
         sessionStorage.removeItem("auto");
       }
     }).catch(err => {
-      console.log("Attempt to auto-sign in with no data");
+      console.log("Attempt to auto sign-in with no data");
     })
   }
 
@@ -92,10 +92,8 @@ class App extends Component {
         <div className="container">
           <Header />
           <Nav login={this.state.login} user={this.state.profile.displayname} handleLogin={() => this.setModalShow(true)} handleLogout={this.handleLogout} />
-          <Switch>
-            <Route exact path="/" component={Main} />
-            <Route component={Main} />
-          </Switch>
+          <Route exact path="/" component={Main} />
+          <Route component={Main} />
           <LoginModal
             show={this.state.modalShow}
             onHide={() => this.setModalShow(false)}
