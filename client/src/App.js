@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { BrowserRouter as Router, Route, browserHistory } from "react-router-dom";
 // Components
 import Header from "./components/Header";
 import Nav from "./components/Nav";
@@ -91,7 +91,7 @@ class App extends Component {
       <div className="container">
         <Header />
         <Nav login={this.state.login} user={this.state.profile.displayname} handleLogin={() => this.setModalShow(true)} handleLogout={this.handleLogout} />
-        <Router>
+        <Router history={browserHistory}>
           <Switch>
             <Route exact path="/" component={Main} />
             <Route path="/demo" component={Demo} />
@@ -111,7 +111,5 @@ class App extends Component {
     );
   };
 };
-
-
 
 export default App;
