@@ -1,14 +1,7 @@
 {
   "short_name": "Derpsical",
-  "name": "It's so dɹəp, it's musical",
-  "icons": [
-    {
-      "src": "favicon.ico",
-      "sizes": "64x64 32x32 24x24 16x16",
-      "type": "image/x-icon"
-    }
-  ],
-  "start_url": ".",
+  "name": "Derpsical: It's so dɹəp, it's musical",
+  "start_url": "./index.html",
   "display": "standalone",
   "theme_color": "#000000",
   "background_color": "#ffffff"
