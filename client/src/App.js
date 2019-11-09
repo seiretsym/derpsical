@@ -93,9 +93,9 @@ class App extends Component {
           <Header />
           <Nav login={this.state.login} user={this.state.profile.displayname} handleLogin={() => this.setModalShow(true)} handleLogout={this.handleLogout} />
           <Switch>
+            <Route exact path="/demo" component={Demo} />
             <Route exact path="/" component={Main} />
             <Route exact path="/profile" render={(props) => <Profile profile={this.state.profile} loggedin={this.state.login} {...props} />} />
-            <Route exact path="/demo" component={Demo} />
             <Route exact path="/composer" render={(props) => <Composer profile={this.state.profile} loggedin={this.state.login} {...props} />} />
             <Route exact path="/songs/:id" render={(props) => <Player {...props} />} />
             <Route exact path="/composer/:id" render={(props) => <Editor {...props} />} />
