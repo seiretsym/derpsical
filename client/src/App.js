@@ -91,7 +91,7 @@ class App extends Component {
       <div className="container">
         <Header />
         <Nav login={this.state.login} user={this.state.profile.displayname} handleLogin={() => this.setModalShow(true)} handleLogout={this.handleLogout} />
-        <Router history={browserHistory}>
+        <Router>
           <Switch>
             <Route exact path="/" component={Main} />
             <Route path="/demo" component={Demo} />
