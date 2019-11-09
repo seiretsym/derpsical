@@ -47,7 +47,7 @@ class Main extends Component {
               cid={this.state.songs[s].composer._id}
               displayname={this.state.songs[s].composer.displayname}
               created={this.state.songs[s].created}
-              key={this.state.songs[s].title} />
+              key={s} />
           )
         }
       }
