@@ -88,24 +88,26 @@ class App extends Component {
     };
 
     return (
-      <BrowserRouter>
-        <div className="container">
-          <Header />
-          <Nav login={this.state.login} user={this.state.profile.displayname} handleLogin={() => this.setModalShow(true)} handleLogout={this.handleLogout} />
-          <Route exact path="/" component={Main} />
-          <Route path="/demo" component={Demo} />
-          <Route path="/profile" render={() => <Profile profile={this.state.profile} loggedin={this.state.login} />} />
-          <Route path="/composer" render={() => <Composer profile={this.state.profile} loggedin={this.state.login} />} />
-          <Route path="/songs/:id" render={(props) => <Player {...props} />} />
-          <Route path="/composer/:id" render={(props) => <Editor {...props} />} />
-          <Route path="/profiles/:id" render={(props) => <User loggedin={this.state.login} uid={this.state.profile._id} {...props} />} />
-          <Route component={Main} />
-          <LoginModal
-            show={this.state.modalShow}
-            onHide={() => this.setModalShow(false)}
-          />
-        </div>
-      </BrowserRouter>
+      <div className="container">
+        <Header />
+        <Nav login={this.state.login} user={this.state.profile.displayname} handleLogin={() => this.setModalShow(true)} handleLogout={this.handleLogout} />
+        <Router>
+          <Switch>
+            <Route exact path="/" component={Main} />
+            <Route path="/demo" component={Demo} />
+            <Route path="/profile" render={() => <Profile profile={this.state.profile} loggedin={this.state.login} />} />
+            <Route path="/composer" render={() => <Composer profile={this.state.profile} loggedin={this.state.login} />} />
+            <Route path="/songs/:id" render={(props) => <Player {...props} />} />
+            <Route path="/composer/:id" render={(props) => <Editor {...props} />} />
+            <Route path="/profiles/:id" render={(props) => <User loggedin={this.state.login} uid={this.state.profile._id} {...props} />} />
+            <Route component={Main} />
+          </Switch>
+        </Router>
+        <LoginModal
+          show={this.state.modalShow}
+          onHide={() => this.setModalShow(false)}
+        />
+      </div>
     );
   };
 };
