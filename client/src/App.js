@@ -41,7 +41,7 @@ class App extends Component {
   // login modal toggler
   setModalShow = bool => {
     this.setState({ modalShow: bool })
-  }
+  };
 
   handleLogout = () => {
     // remove data stored in session storage
@@ -53,7 +53,7 @@ class App extends Component {
       profile: {
         displayname: "No User"
       }
-    })
+    });
     document.location.replace("./");
   }
 
@@ -68,12 +68,12 @@ class App extends Component {
         })
       } else {
         // if not.. remove the sessionStorage data to prevent abuse
-        sessionStorage.removeItem("user")
-        sessionStorage.removeItem("hash")
-        sessionStorage.removeItem("auto")
+        sessionStorage.removeItem("user");
+        sessionStorage.removeItem("hash");
+        sessionStorage.removeItem("auto");
       }
     }).catch(err => {
-      console.log("Attempt to auto-sign in with no data")
+      console.log("Attempt to auto-sign in with no data");
     })
   }
 
@@ -82,10 +82,10 @@ class App extends Component {
       username: sessionStorage.getItem("user"),
       password: sessionStorage.getItem("hash"),
       auto: sessionStorage.getItem("auto")
-    }
+    };
     if (user.auto && !this.state.login) {
       this.autoSignIn(user)
-    }
+    };
 
     return (
       <Router>
@@ -93,13 +93,13 @@ class App extends Component {
           <Header />
           <Nav login={this.state.login} user={this.state.profile.displayname} handleLogin={() => this.setModalShow(true)} handleLogout={this.handleLogout} />
           <Switch>
-            <Route exact path="/demo" component={Demo} />
             <Route exact path="/" component={Main} />
-            <Route exact path="/profile" render={(props) => <Profile profile={this.state.profile} loggedin={this.state.login} {...props} />} />
-            <Route exact path="/composer" render={(props) => <Composer profile={this.state.profile} loggedin={this.state.login} {...props} />} />
-            <Route exact path="/songs/:id" render={(props) => <Player {...props} />} />
-            <Route exact path="/composer/:id" render={(props) => <Editor {...props} />} />
-            <Route exact path="/profiles/:id" render={(props) => <User loggedin={this.state.login} uid={this.state.profile._id} {...props} />} />
+            <Route path="/demo" component={Demo} />
+            <Route path="/profile" render={(props) => <Profile profile={this.state.profile} loggedin={this.state.login} {...props} />} />
+            <Route path="/composer" render={(props) => <Composer profile={this.state.profile} loggedin={this.state.login} {...props} />} />
+            <Route path="/songs/:id" render={(props) => <Player {...props} />} />
+            <Route path="/composer/:id" render={(props) => <Editor {...props} />} />
+            <Route path="/profiles/:id" render={(props) => <User loggedin={this.state.login} uid={this.state.profile._id} {...props} />} />
             <Route component={Main} />
           </Switch>
           <LoginModal
@@ -108,9 +108,9 @@ class App extends Component {
           />
         </div>
       </Router>
-    )
-  }
-}
+    );
+  };
+};
 
 
 
