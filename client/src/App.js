@@ -98,7 +98,7 @@ class App extends Component {
             <Route exact path="/profile" render={() => <Profile profile={this.state.profile} loggedin={this.state.login} />} />
             <Route exact path="/profiles/:id" render={(props) => <User loggedin={this.state.login} uid={this.state.profile._id} {...props} />} />
             <Route exact path="/composer" render={() => <Composer profile={this.state.profile} loggedin={this.state.login} />} />
-            <Route exact path="/composer/:id" render={(props) => <Editor {...props} />} />
+            <Route exact path="/editor/:id" render={(props) => <Editor {...props} />} />
             <Route exact path="/songs/:id" render={(props) => <Player {...props} />} />
             <Route component={Main} />
           </Switch>
