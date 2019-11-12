@@ -258,7 +258,7 @@ class ProfileBody extends Component {
 
   // redirect to editor
   editSong = id => {
-    document.location.replace("../../composer/" + id);
+    document.location.replace("../../editor/" + id);
   }
 
   componentDidUpdate() {
