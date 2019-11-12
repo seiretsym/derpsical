@@ -108,7 +108,7 @@ class User extends Component {
           <h1>Songs</h1>
           <hr />
           <div className="d-flex flex-wrap profile-song-list overflow-auto">
-            {this.state.profile.songs.map(song => {
+            {this.state.profile.songs.map((song, index) => {
               return (
                 <SongCard
                   title={song.title}
@@ -116,7 +116,7 @@ class User extends Component {
                   cid={song.composer}
                   displayname={this.state.profile.displayname}
                   created={song.created}
-                  key={song.title} />
+                  key={index} />
               )
             })}
           </div>

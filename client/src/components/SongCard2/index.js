@@ -2,7 +2,7 @@ import React from "react";
 
 function SongCard2(props) {
   return (
-    <div className="card bg-dark text-light mb-3 mx-3 p-3 card-song" key={props.title}>
+    <div className="card bg-dark text-light mb-3 mx-3 p-3 card-song">
       <div className="card-header p-0">
         <a href={"../songs/" + props.id}>
           <img src="../../../logo256.png" alt={props.title} />

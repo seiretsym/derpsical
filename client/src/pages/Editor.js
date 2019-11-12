@@ -24,7 +24,7 @@ const keyboardShortcuts = KeyboardShortcuts.create({
   keyboardConfig: [],
 });
 
-class Demo extends Component {
+class Editor extends Component {
   state = {
     notes: [],
     noteScript: "",
@@ -269,4 +269,4 @@ class Demo extends Component {
   }
 }
 
-export default Demo;
+export default Editor;

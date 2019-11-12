@@ -11,7 +11,7 @@ class Nav extends Component {
             <span className="sr-only">Toggle Dropdown</span>
           </button>
           <div className="dropdown-menu bg-secondary">
-            <a className="dropdown-item btn btn-dd" href="/profile">Profile</a>
+            <a className="dropdown-item btn btn-dd" href="../../profile">Profile</a>
             <div className="dropdown-divider"></div>
             <button className="btn btn-dd dropdown-item" onClick={() => this.props.handleLogout()}>Sign Out</button>
           </div>
