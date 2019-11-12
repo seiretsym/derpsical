@@ -95,11 +95,13 @@ class App extends Component {
           <Switch>
             <Route exact path="/" component={Main} />
             <Route path="/demo" component={Demo} />
-            <Route path="/profile" render={() => <Profile profile={this.state.profile} loggedin={this.state.login} />} />
-            <Route path="/composer" render={() => <Composer profile={this.state.profile} loggedin={this.state.login} />} />
+            <Route path="/profile" render={() => <Profile profile={this.state.profile} loggedin={this.state.login} />}>
+              <Route path="/:id" render={(props) => <User loggedin={this.state.login} uid={this.state.profile._id} {...props} />} />
+            </Route>
+            <Route path="/composer" render={() => <Composer profile={this.state.profile} loggedin={this.state.login} />}>
+              <Route path="/:id" render={(props) => <Editor {...props} />} />
+            </Route>
             <Route path="/songs/:id" render={(props) => <Player {...props} />} />
-            <Route path="/composer/:id" render={(props) => <Editor {...props} />} />
-            <Route path="/profiles/:id" render={(props) => <User loggedin={this.state.login} uid={this.state.profile._id} {...props} />} />
             <Route component={Main} />
           </Switch>
         </Router>
