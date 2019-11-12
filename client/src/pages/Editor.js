@@ -55,7 +55,7 @@ class Editor extends Component {
   }
 
   playNotes = () => {
-    let string = this.state.text.toLowerCase().replace(/\s/g, "");
+    let string = this.state.noteScript.toLowerCase().replace(/\s/g, "");
     let chords = string.split(",")
     let timer = 0;
     Promise.all(chords.map(chord => {
