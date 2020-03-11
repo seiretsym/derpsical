@@ -6,7 +6,7 @@ const api = require("./api")
 router.use("/api", api)
 
 // send react app
-router.use(function(req, res) {
+router.use(function (req, res) {
     res.sendFile(path.join(__dirname, "../client/public/index.html"))
 })
 
