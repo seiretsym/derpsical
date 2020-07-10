@@ -24,7 +24,7 @@ app.get("*", (req, res) => {
 });
 
 // connect to mongo~
-mongoose.connect(process.env.MONGODB_URI || "mongodb://heroku_mtjbrfwk:jrnqtohmlp4ebvjaervtvr2rn@ds241258.mlab.com:41258/heroku_mtjbrfwk");
+mongoose.connect(process.env.MONGODB_URI);
 
 // start server
 app.listen(PORT, () => console.log("Server listening on port: " + PORT))
